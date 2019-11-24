@@ -1,0 +1,119 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  max-width: 1200px;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.w3-sidebar a {font-family: "Roboto", sans-serif}
+body,h1,h2,h3,h4,h5,h6,.w3-wide { font-family: "Montserrat", sans-serif; }
+
+.w3-main{
+  margin-left: 250px;
+}
+
+#mySidebar{
+  z-index: 3;
+  width: 250px;
+}
+
+#categoryList{
+  font-weight: bold;
+}
+
+#hideLargeMain{
+  margin-top: 83px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-main {
+  position:fixed;
+  background: white;
+  width: 30%;
+  height: auto;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+
+.modal-main button:hover{
+  cursor: pointer;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
+.login-wrapper{
+  padding: 20px;
+}
+
+.is-active{
+  background-color: lightgray;
+}
+
+.product-form-wrapper{
+  margin-left: 140px;
+}
+
+.product-form input, textarea, button, select{
+  margin: 5px;
+}
+
+.order-container{
+  border: 1px solid lightgray;
+}
+
+textarea{
+  border: 1px solid lightgray;
+}
+
+.product-form span{
+  width: 200px;
+}
+
+.undecorated{
+  text-decoration: none;
+}
+
+.fa-search{
+  cursor: pointer;
+}
+
+.search-bar{
+  width: 0px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;  
+  background-position: 10px 10px; 
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+.search-bar:focus{
+    width: 40%;
+}
