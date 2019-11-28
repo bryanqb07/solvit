@@ -1,5 +1,6 @@
 import React from 'react';
 import CreateCategory from './CreateCategory';
+import DeleteButton from '../DeleteButton';
 import { FETCH_CATEGORY } from "../../graphql/queries";
 import { Query } from "react-apollo";
 
@@ -12,9 +13,12 @@ const CategoryEditContainer = props => {
                     if (error) return `Error! ${error.message}`;
                     const category = data.category;
                     return (
-                        <CreateCategory
-                            category={category}
-                            update={true} />
+                        <div>
+                            <CreateCategory
+                                category={category}
+                                update={true} />
+                                <DeleteButton id={category.id} category={true} />
+                        </div>
                     );
                 }}
             </Query>

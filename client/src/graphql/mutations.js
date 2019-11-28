@@ -93,6 +93,14 @@ export const UPDATE_CATEGORY = gql`
     }
 `;
 
+export const DELETE_CATEGORY = gql`
+    mutation DeleteCategory($id: ID!){
+        deleteCategory(id: $id){
+            id
+        }
+    }
+`;
+
 export const CREATE_ORDER = gql`
     mutation CreateOrder($products: [ID]!, $prices: [Int]!, $userId: ID!){
         newOrder(products: $products, prices: $prices, userId: $userid){

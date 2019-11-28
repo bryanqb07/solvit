@@ -11,7 +11,7 @@ import { ApolloProvider } from "react-apollo";
 import { onError } from "apollo-link-error";
 import { ApolloLink } from "apollo-link";
 import { VERIFY_USER } from './graphql/mutations';
-// import { persistCache } from 'apollo-cache-persist';
+// import { persistCache } from 'apollo -cache-persist';
 
 const cache = new InMemoryCache({
     dataIdFromObject: object => object.id || null
@@ -30,7 +30,7 @@ const errorLink = onError(({ graphQLErrors }) => {
 });
 
 // // await before instantiating ApolloClient, else queries might run before the cache is persisted
-// await persistCache({
+//     persistCache({
 //     cache,
 //     storage: window.localStorage,
 // });

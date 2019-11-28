@@ -16,10 +16,8 @@ class CreateCategory extends Component {
     }
 
     updateCache(cache, { data }) {
-        if(this.props.update){
-            console.log(cache);
-            return;
-        }
+        if(this.props.update) return;
+        
         let categories;
         try {
             // if we've already fetched the categories then we can read the
