@@ -26,13 +26,13 @@ const ProductSchema = new Schema({
     type: Number,
     required: true
   },
-  image: {
-    type: String
-  },
-  photo: {
-    type: Schema.Types.ObjectId,
-    ref: "category"
-  }
+  // image: {
+  //   type: String
+  // }
+  // photo: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "category"
+  // }
 });
 
 ProductSchema.index({ name: "text", description: "text" });

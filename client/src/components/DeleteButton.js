@@ -20,9 +20,8 @@ const DeleteButton = ({id, category}) => (
             // delete item from cache
             if (items) {
                 let itemArray = category ? items.categories : items.products;
-                console.log(itemArray);
                 let deletedItemID = category ? data.deleteCategory.id : data.deleteProduct.id
-                const updatedArray = itemArray.filter(item => item.id != deletedItemID)
+                const updatedArray = itemArray.filter(item => item.id !== deletedItemID)
                 const itemData = category ? { categories: updatedArray } : { products: updatedArray }
                 cache.writeQuery({
                     query: queryType,

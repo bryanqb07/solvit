@@ -11,6 +11,7 @@ const EditProductContainer = props => (
         if (error) return `Error! ${error.message}`;
         const categories = data.categories;
         const product = data.product;
+
         return (
             <div>
                 <CreateProduct
@@ -18,7 +19,6 @@ const EditProductContainer = props => (
                     productId={props.match.params.id} update={props.match.params.id ? true : false} />
                 {   props.match.params.id ? <DeleteButton id={product.id} /> : ""    }
             </div>
-
         );
     }}
     </Query>

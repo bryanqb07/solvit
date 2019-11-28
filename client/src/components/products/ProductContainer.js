@@ -8,7 +8,7 @@ const ProductContainer = ({ products, nonStaff }) => (
       {products.map(product => (
         <div key={product.id} className="product-grid__product-wrapper">
           <div className="product-grid__img-wrapper">
-            <img src="testFence.png"></img>
+            <img src="testFence.png" alt="product"></img>
           </div>
           <span className="product-grid__title">{product.name}</span>
           {/* <div className="product-grid__extend-wrapper"> */}

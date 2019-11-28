@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from 'react-router-dom';
 import { FETCH_PRODUCTS } from "../../graphql/queries";
 import { Query } from "react-apollo";
 import ProductContainer from "./ProductContainer";

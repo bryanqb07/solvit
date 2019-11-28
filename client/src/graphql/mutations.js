@@ -31,8 +31,8 @@ export const REGISTER_USER = gql`
 `;
 
 export const CREATE_PRODUCT = gql`
-    mutation CreateProduct($name: String!, $description: String!, $weight: Int!, $price: Int!, $category: ID!, $photo: Upload!){
-        newProduct(name: $name, description: $description, weight: $weight, price: $price, category: $category, photo: $photo){
+    mutation CreateProduct($name: String!, $description: String!, $weight: Int!, $price: Int!, $category: ID!){
+        newProduct(name: $name, description: $description, weight: $weight, price: $price, category: $category){
             id,
             name,
             description,
@@ -41,11 +41,6 @@ export const CREATE_PRODUCT = gql`
             category{
                 id,
                 name
-            },
-            photo{
-                filename
-                mimetype
-                encoding
             }
         }
     }

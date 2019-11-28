@@ -15,7 +15,7 @@ function ProductDetail(props) {
                 const product = data.product;
                 return (
                     <div>
-                        <img src="testFence.png"></img>
+                        <img src="testFence.png" alt="product"></img>
                         <p>Name: {product.name}</p>
                         <p>Description: {product.description}</p>
                         <p>Price: ${product.price}</p>

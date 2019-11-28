@@ -56,9 +56,9 @@ const mutation = new GraphQLObjectType({
                 weight: { type: GraphQLInt },
                 price: { type: GraphQLInt },
                 category: { type: GraphQLID },
-                photo: { type: GraphQLUpload }
+                // photo: { type: GraphQLUpload }
             },
-            async resolve(_, { name, description, weight, price, category, photo }, ctx) {
+            async resolve(_, { name, description, weight, price, category }, ctx) {
                 // const file = await args.file;
                 // const { createReadStream, filename, mimetype } = file;
                 // const fileStream = createReadStream();
