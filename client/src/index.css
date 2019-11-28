@@ -117,3 +117,9 @@ textarea{
 .search-bar:focus{
     width: 40%;
 }
+
+.delete-button{
+  margin-left: 140px;
+  margin-top: 60px;
+  background-color: red;
+}

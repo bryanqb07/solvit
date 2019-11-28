@@ -35,7 +35,7 @@ const ProductSchema = new Schema({
   }
 });
 
-ProductSchema.index({ name: "text", description: "text" })
+ProductSchema.index({ name: "text", description: "text" });
 
 ProductSchema.statics.updateProductCategory = (productId, categoryId) => {
     const Product = mongoose.model("product");
@@ -47,7 +47,7 @@ ProductSchema.statics.updateProductCategory = (productId, categoryId) => {
             Category.findById(product.category).then(oldcategory => {
                 oldcategory.products.pull(product);
                 return oldcategory.save();
-            })
+            });
         }
         // find the category and push product, then update product's category
         return Category.findById(categoryId).then(newCategory => {
@@ -59,6 +59,10 @@ ProductSchema.statics.updateProductCategory = (productId, categoryId) => {
             );
         });
     });
-}
+};
+
+ProductSchema.methods.computePrice = function(){
+  return 100 * this.price;
+};
 
 module.exports = mongoose.model("product", ProductSchema);

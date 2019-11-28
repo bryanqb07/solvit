@@ -58,7 +58,24 @@ const mutation = new GraphQLObjectType({
                 category: { type: GraphQLID },
                 photo: { type: GraphQLUpload }
             },
-            async resolve(_, { name, description, weight, price, category }, ctx) {
+            async resolve(_, { name, description, weight, price, category, photo }, ctx) {
+                // const file = await args.file;
+                // const { createReadStream, filename, mimetype } = file;
+                // const fileStream = createReadStream();
+
+                // //Here stream it to S3
+                // // Enter your bucket name here next to "Bucket: "
+                // const uploadParams = {
+                // Bucket: "gqlfence-dev",
+                // Key: filename,
+                // Body: fileStream
+                // };
+                // const result = await s3.upload(uploadParams).promise();
+
+                // console.log(result);
+
+                // return file;
+                
                 const validUser = await AuthService.verifyUser({ token: ctx.token, admin: true });
                 if(validUser.loggedIn){
                     return new Product({ name, description, weight, price, category }).save();

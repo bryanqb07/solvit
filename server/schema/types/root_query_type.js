@@ -111,6 +111,17 @@ const RootQueryType = new GraphQLObjectType({
             resolve(_, { queryString }) {
                 return Product.find({ $text: { $search:  queryString } });
             }
+        },
+        getProductPrice: {
+            type: ProductType,
+            args: { id: { type: GraphQLID }},
+            resolve(_, {id}){
+                return Product.findById(id).then(product => {
+                    product.price = product.computePrice();
+                    // console.log(product.computePrice());
+                    return product;
+                });     
+            }
         }
     })
 });

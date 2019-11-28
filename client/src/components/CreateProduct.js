@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import { FETCH_PRODUCTS } from "../graphql/queries";
-import { CREATE_PRODUCT, UPDATE_PRODUCT } from "../graphql/mutations";
+import { CREATE_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT } from "../graphql/mutations";
 
 class CreateProduct extends Component {
     constructor(props) {
@@ -71,6 +71,38 @@ class CreateProduct extends Component {
             });
         }
 
+    }
+
+    handleClick(e){
+        e.preventDefault();
+        const result = window.confirm("Are you sure you want to delete this product?");
+        if(result){
+            return (
+                <Mutation
+                    mutation={DELETE_PRODUCT}
+                    variables={{id: this.state.productId}}
+                    onError={err => this.setState({ message: err.message })}
+                    // update cache on product creation
+                    // update={(cache, data) => this.updateCache(cache, data)}
+                    onCompleted={data => {
+                        // const { name } = data.newProduct;
+                        this.setState({
+                            message: `Product deleted successfully`
+                        })
+                    }
+                    }
+                >
+                    {({ loading, error, data }) => {
+                        if (loading) return <div className="loader">Loading...</div>
+                        if (error) return `Error! ${error.message}`;
+                        console.log(data);
+                        return data;
+                    }}
+                </Mutation>
+            )
+        }else{
+            return;
+        }
     }
 
     handlePhotoUpload(e){
