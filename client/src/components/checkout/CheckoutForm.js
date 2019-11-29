@@ -9,6 +9,10 @@ class CheckoutForm extends Component {
         super(props);
 
         this.state = {
+            user: this.props.user ? this.props.user : "",
+            products: this.props.products ? this.props.products : "",
+            total: this.props.total ? this.props.total : "",
+
             shipping_name: "",
             shipping_address1: "",
             shipping_address2: "",
@@ -27,6 +31,7 @@ class CheckoutForm extends Component {
             checked: true // billing info = shipping info
         };
         this.toggleCheck = this.toggleCheck.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     toggleCheck(e){
@@ -88,13 +93,27 @@ class CheckoutForm extends Component {
     //     }
     // }
 
-    handleSubmit(e, newProduct) {
+    handleSubmit(e, newOrder) {
         e.preventDefault();
-        newProduct({
+        newOrder({
             variables: {
-                name: this.state.name,
-                description: this.state.description,
-                weight: parseInt(this.state.weight)
+                user: this.state.user,
+                products: this.state.products,
+                total: this.state.total,
+
+                shipping_name: this.state.shipping_name,
+                shipping_address1: this.state.shipping_address1,
+                shipping_address2: this.state.shipping_address2,
+                shipping_city: this.state.shipping_city,
+                shipping_state: this.state.shipping_state,
+                shipping_zipcode: this.state.shipping_zipcode,
+
+                billing_name: this.state.billing_name,
+                billing_address1: this.state.billing_address1,
+                billing_address2: this.state.billing_address2,
+                billing_city: this.state.billing_city,
+                billing_state: this.state.billing_state,
+                billing_zipcode: this.state.billing_zipcode,
             }
         });
     }
@@ -107,9 +126,8 @@ class CheckoutForm extends Component {
                 // update cache on product creation
                 update={(cache, data) => this.updateCache(cache, data)}
                 onCompleted={data => {
-                    const { name } = data.newProduct;
                     this.setState({
-                        message: `New product ${name} created successfully`
+                        message: `New order created successfully`
                     })
                 }
                 }
@@ -182,8 +200,10 @@ class CheckoutForm extends Component {
                                     />
                                 </form>
                             </div>
+                            <br />
                             <label>Billing Info Matches Shipping Info</label>
                             <input type="checkbox" checked={this.state.checked} onChange={this.toggleCheck} />
+                            <br />
                             {this.state.checked ? "" : (
                             <div>
                                 <h3>Billing Information</h3>
@@ -249,6 +269,8 @@ class CheckoutForm extends Component {
                                 </form>
                             </div>
                             )}
+                            <br/>
+                            <button onClick={e => this.handleSubmit(e, newOrder)}>Submit Order</button>
                             <p>{this.state.message}</p>
                         </div>
                     )

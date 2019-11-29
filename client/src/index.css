@@ -123,3 +123,11 @@ textarea{
   margin-top: 60px;
   background-color: red;
 }
+
+.flex{
+  display: flex;
+}
+
+.space-evenly{
+  justify-content: space-evenly;
+}

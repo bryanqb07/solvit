@@ -33,7 +33,7 @@ const OrderSchema = new Schema({
             required: true
         },
         zipcode: {
-            type: Number,
+            type: String,
             required: true
         }
     },
@@ -51,8 +51,7 @@ const OrderSchema = new Schema({
             required: true
         },
         address2: {
-            type: String,
-            required: true
+            type: String
         },
         city: {
             type: String,
@@ -63,7 +62,7 @@ const OrderSchema = new Schema({
             required: true
         },
         zipcode: {
-            type: Number,
+            type: String,
             required: true
         }
     },
@@ -71,11 +70,11 @@ const OrderSchema = new Schema({
         gateway: { 
             type: String,
             required: true 
-        },
-        status: { 
-            type: Boolean,
-            required: true
         }
+        // status: { 
+        //     type: String,
+        //     default: true
+        // }
     },
     total: {
         type: Number,

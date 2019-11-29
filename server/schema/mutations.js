@@ -167,12 +167,54 @@ const mutation = new GraphQLObjectType({
             type: OrderType,
             args: {
                 products: { type: GraphQLList(GraphQLID) },
-                prices: { type: GraphQLList(GraphQLInt) },
-                user: { type: GraphQLID }
+                total: { type: GraphQLInt },
+                // prices: { type: GraphQLList(GraphQLInt) },
+                user: { type: GraphQLID },
+                shipping_name: { type: GraphQLString },
+                shipping_address1: { type: GraphQLString },
+                shipping_address2: { type: GraphQLString },
+                shipping_city: { type: GraphQLString },
+                shipping_state: { type: GraphQLString },
+                shipping_zipcode: { type: GraphQLString },
+                billing_name: { type: GraphQLString },
+                billing_address1: { type: GraphQLString },
+                billing_address2: { type: GraphQLString },
+                billing_city: { type: GraphQLString },
+                billing_state: { type: GraphQLString },
+                billing_zipcode: { type: GraphQLString }
+
             },
-            async resolve(_, { products, prices, user }, ctx) {
-                const total = prices.reduce((acc, cv) => acc + cv);
-                return new Order({ products, total, user }).save();
+            async resolve(_, { 
+                products, user, total, shipping_name, shipping_address1, shipping_address2, shipping_city,
+                shipping_state, shipping_zipcode, billing_name, billing_address1, billing_address2, billing_city,
+                billing_state, billing_zipcode
+            }, ctx) {
+                // validatePrice fn
+                const order = {
+                    user,
+                    products,
+                    total,
+                    paymentInfo: {
+                        gateway: "Stripe"
+                    },
+                    billingInfo: {
+                        name: billing_name,
+                        address1: billing_address1,
+                        address2: billing_address2,
+                        city: billing_city,
+                        state: billing_state,
+                        zipcode: billing_zipcode
+                    },
+                    shippingInfo: {
+                        name: shipping_name,
+                        address1: shipping_address1,
+                        address2: shipping_address2,
+                        city: shipping_city,
+                        state: shipping_state,
+                        zipcode: shipping_zipcode
+                    }
+                };
+                return new Order(order).save();
             }
         }     
     }

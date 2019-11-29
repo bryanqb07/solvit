@@ -37,6 +37,13 @@ export const FETCH_CART_ITEMS = gql`
   }
 `;
 
+export const FETCH_CART_ITEMS_AND_USER = gql`
+  query FetchCartItems{
+    cart @client,
+    userId @client
+  }
+`;
+
 export const FETCH_CATEGORIES = gql`
   {
     categories{

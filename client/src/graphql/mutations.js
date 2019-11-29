@@ -97,14 +97,47 @@ export const DELETE_CATEGORY = gql`
 `;
 
 export const CREATE_ORDER = gql`
-    mutation CreateOrder($products: [ID]!, $prices: [Int]!, $userId: ID!){
-        newOrder(products: $products, prices: $prices, userId: $userid){
+    mutation CreateOrder(
+        $products: [ID]!, 
+        $total: Int!, 
+        $user: ID,
+        $shipping_name: String!,
+        $shipping_address1: String!,
+        $shipping_address2: String!,
+        $shipping_city: String!,
+        $shipping_state: String!,
+        $shipping_zipcode: String!,
+        $billing_name: String!,
+        $billing_address1: String!,
+        $billing_address2: String!,
+        $billing_city: String!,
+        $billing_state: String!,
+        $billing_zipcode: String!
+        ){
+        newOrder(
+            products: $products, 
+            total: $total, 
+            user: $user,
+            shipping_name: $shipping_name,
+            shipping_address1: $shipping_address1,
+            shipping_address2: $shipping_address2,
+            shipping_city: $shipping_city,
+            shipping_state: $shipping_state,
+            shipping_zipcode: $shipping_zipcode,
+            billing_name: $billing_name,
+            billing_address1: $billing_address1,
+            billing_address2: $billing_address2,
+            billing_city: $billing_city,
+            billing_state: $billing_state,
+            billing_zipcode: $billing_zipcode
+        ){
             id,
             products{
                 id,
                 name,
                 price
-            }
+            },
+            total
         }
     }
 `;
