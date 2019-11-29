@@ -52,7 +52,7 @@ const App = () => (
             <div className="w3-row">
               <Switch>
                 <Route exact path="/products/:id" component={ProductDetail} />
-                <Route exact path="/cart/checkout" component={Checkout} />
+                <Route exact path="/checkout" component={Checkout} />
                 <Route exact path="/cart" component={Cart} />
                 <Route exact path="/users/:id" component={UserProfile} />
                 <Route exact path="/orders/:id" component={UserOrders} />

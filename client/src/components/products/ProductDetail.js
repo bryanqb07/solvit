@@ -21,7 +21,7 @@ function ProductDetail(props) {
                         <p>Price: ${product.price}</p>
                         <AddItemToCart price={product.price} id={product.id} name={product.name} />
                         <PriceQuote id={product.id}/>
-                        <Link to={"/cart/checkout"}>Checkout</Link>
+                        <Link to={"/checkout"}>Checkout</Link>
                     </div>
                 )
             }}

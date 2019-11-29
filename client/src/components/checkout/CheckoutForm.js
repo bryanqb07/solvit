@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Query, Mutation } from "react-apollo";
-import { FETCH_PRODUCT, FETCH_PRODUCTS } from "../../graphql/queries";
+import { FETCH_CART_ITEMS } from "../../graphql/queries";
 import { CREATE_ORDER } from "../../graphql/mutations";
 import ShippingForm from "./ShippingForm";
 
@@ -73,26 +73,13 @@ class CheckoutForm extends Component {
         return e => this.setState({ [field]: e.target.value });
     }
 
-    // updateCache(cache, { data }) {
-    //     let products;
-    //     try {
-    //         // if we've already fetched the products then we can read the
-    //         // query here
-    //         products = cache.readQuery({ query: FETCH_PRODUCTS })
-    //     } catch (err) {
-    //         return;
-    //     }
-    //     // if we had previously fetched products we'll add our new product to our cache
-    //     if (products) {
-    //         let productArray = products.products;
-    //         let newProduct = data.newProduct;
-    //         cache.writeQuery({
-    //             query: FETCH_PRODUCTS,
-    //             data: { products: productArray.concat(newProduct) }
-    //         })
-    //     }
-    // }
-
+    updateCache(cache, { data }) {
+        cache.writeQuery({
+            query: FETCH_CART_ITEMS,
+            data: { cart: [] }
+        });
+    }
+    
     handleSubmit(e, newOrder) {
         e.preventDefault();
         newOrder({

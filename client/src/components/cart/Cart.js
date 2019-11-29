@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import { FETCH_CART_ITEMS } from "../../graphql/queries";
 import { Query } from "react-apollo";
 import CartItem from "./CartItem";
@@ -19,7 +20,7 @@ function Cart() {
                             </li> 
                             )) }
                             <li>Total: ${data.cart.map(item => item.price).reduce((acc, cv) => acc + cv)}</li>
-                            <button>Checkout</button>
+                            <Link to="/checkout">Checkout</Link>
                         </ul>
                     )
                 }else{
