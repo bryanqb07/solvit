@@ -19,10 +19,10 @@ class Registration extends Component {
     }
 
     updateCache(client, { data }) {
-        console.log(data);
+        // console.log(data);
         client.writeData({
             data: { isLoggedIn: data.register.loggedIn }
-        })
+        });
     }
 
     render() {

@@ -17,6 +17,7 @@ import EditProductContainer from "./products/EditProductContainer";
 import UserOrders from "./orders/UserOrders";
 import OrderDetail from "./orders/OrderDetail";
 import CategoryEditContainer from "./categories/CategoryEditContainer";
+import Checkout from "./checkout/Checkout";
 
 const App = () => (
   <div className="w3-content">
@@ -51,6 +52,7 @@ const App = () => (
             <div className="w3-row">
               <Switch>
                 <Route exact path="/products/:id" component={ProductDetail} />
+                <Route exact path="/cart/checkout" component={Checkout} />
                 <Route exact path="/cart" component={Cart} />
                 <Route exact path="/users/:id" component={UserProfile} />
                 <Route exact path="/orders/:id" component={UserOrders} />

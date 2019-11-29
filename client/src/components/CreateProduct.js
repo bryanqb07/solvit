@@ -80,7 +80,6 @@ class CreateProduct extends Component {
     }
 
     render(){
-        console.log(this.state);
         return(
             <Mutation
                 mutation={this.props.update ? UPDATE_PRODUCT : CREATE_PRODUCT}
@@ -88,7 +87,6 @@ class CreateProduct extends Component {
                 // update cache on product creation
                 update={(cache, data) => this.updateCache(cache, data)}
                 onCompleted={data => {
-                    // const { name } = data.newProduct;
                     this.setState({
                         message: this.props.update ? `Product updated successfully` : `New product created successfully`
                     })

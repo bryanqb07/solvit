@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FETCH_PRODUCT } from "../../graphql/queries";
 import { Query } from "react-apollo";
 import AddItemToCart from "./AddToCart";
-import InstantQuote from "../InstantQuote";
+import PriceQuote from "../PriceQuote";
 
 function ProductDetail(props) {
     return (
@@ -19,8 +19,8 @@ function ProductDetail(props) {
                         <p>Name: {product.name}</p>
                         <p>Description: {product.description}</p>
                         <p>Price: ${product.price}</p>
-                        <InstantQuote id={product.id} />
                         <AddItemToCart price={product.price} id={product.id} name={product.name} />
+                        <PriceQuote id={product.id}/>
                         <Link to={"/cart/checkout"}>Checkout</Link>
                     </div>
                 )

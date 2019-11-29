@@ -5,7 +5,7 @@ import { Query } from "react-apollo";
 const UserProfile = (props) => (
     <Query query={FETCH_USER} variables={props.match.params}>
         {({ loading, error, data }) => {
-            if (loading) return <div class="loader">Loading...</div>
+            if (loading) return <div className="loader">Loading...</div>
             if (error) return `Error! ${error.message}`;
 
             const user = data.user;

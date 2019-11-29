@@ -1,5 +1,6 @@
 import React from "react";
-import Cart from "./cart/Cart";
+import Cart from "../cart/Cart";
+import CheckoutForm from './CheckoutForm';
 
 const Checkout = () => {
     return(
@@ -9,3 +10,5 @@ const Checkout = () => {
         </div>
     )
 }
+
+export default Checkout;

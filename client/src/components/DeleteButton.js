@@ -11,8 +11,6 @@ const DeleteButton = ({id, category}) => (
             let items;
             const queryType = category ? FETCH_CATEGORIES : FETCH_PRODUCTS;
             try {
-                // if we've already fetched the products then we can read the
-                // query here
                 items = cache.readQuery({ query: queryType });
             } catch (err) {
                 return;

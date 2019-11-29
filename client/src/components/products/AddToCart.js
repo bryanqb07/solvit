@@ -40,7 +40,7 @@ const AddItemToCart = ({id, price, name}) => {
                                 const data = {
                                     cart: [...cart, { id, price, name } ]
                                 } 
-                                console.log(data);
+                                // console.log(data);
                                 // write to our cache with our new array of cart items!
                                 cache.writeQuery({ query: FETCH_CART_ITEMS, data })
                             }}>

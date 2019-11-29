@@ -5,7 +5,6 @@ const CartItem = ({cartItem}) => (
         <span>Name: {cartItem.name}</span>
         <br />
         <span>Price: ${cartItem.price}</span>
-        { console.log(cartItem) }
     </div>
 )
 
