@@ -15,6 +15,9 @@ const Product = mongoose.model("product");
 const Order = mongoose.model("order");
 const User = mongoose.model("user");
 
+const stripeKey = require('../../config/keys').STRIPE_SECRET_KEY;
+const stripe = require("stripe")(stripeKey);
+
 const mutation = new GraphQLObjectType({
     name: "Mutation",
     fields: {
@@ -190,34 +193,49 @@ const mutation = new GraphQLObjectType({
                 shipping_state, shipping_zipcode, billing_name, billing_address1, billing_address2, billing_city,
                 billing_state, billing_zipcode
             }, ctx) {
-                // validatePrice fn
-                const order = {
-                  products,
-                  total,
-                  paymentInfo: {
-                    gateway: "Stripe",
-                    token
-                  },
-                  billingInfo: {
-                    name: billing_name,
-                    address1: billing_address1,
-                    address2: billing_address2,
-                    city: billing_city,
-                    state: billing_state,
-                    zipcode: billing_zipcode
-                  },
-                  shippingInfo: {
-                    name: shipping_name,
-                    address1: shipping_address1,
-                    address2: shipping_address2,
-                    city: shipping_city,
-                    state: shipping_state,
-                    zipcode: shipping_zipcode
-                  }
-                };
-                if (user) order.user = user;
-                return new Order(order).save();
-            }
+                      // validatePrice fn
+                      const order = {
+                        products,
+                        total,
+                        paymentInfo: {
+                          gateway: "Stripe",
+                          token
+                        },
+                        billingInfo: {
+                          name: billing_name,
+                          address1: billing_address1,
+                          address2: billing_address2,
+                          city: billing_city,
+                          state: billing_state,
+                          zipcode: billing_zipcode
+                        },
+                        shippingInfo: {
+                          name: shipping_name,
+                          address1: shipping_address1,
+                          address2: shipping_address2,
+                          city: shipping_city,
+                          state: shipping_state,
+                          zipcode: shipping_zipcode
+                        }
+                      };
+                      if (user) order.user = user;
+                      console.log(order);
+
+                      // stripe validation
+                      try {
+                        let { status } = await stripe.charges.create({
+                          amount: total * 100,
+                          currency: "usd",
+                          description: "An example charge",
+                          source: token
+                        });
+
+                        return new Order(order).save();
+                      } catch (err) {
+                        console.log(err);
+                        return err;
+                      }
+                    }
         }
     }
 });

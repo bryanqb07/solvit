@@ -76,10 +76,11 @@ class CheckoutForm extends Component {
     }
 
     updateCache(cache, { data }) {
-        cache.writeQuery({
-            query: FETCH_CART_ITEMS,
-            data: { cart: [] }
-        });
+        return;
+        // cache.writeQuery({
+        //     query: FETCH_CART_ITEMS,
+        //     data: { cart: [] }
+        // });
     }
     
     async handleSubmit(e, newOrder) {

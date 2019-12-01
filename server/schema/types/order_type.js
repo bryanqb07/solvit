@@ -14,7 +14,7 @@ const OrderType = new GraphQLObjectType({
             resolve(parentValue) {
                 return Order.findById(parentValue.id)
                     .populate("products")
-                    .then(order => order.products)
+                    .then(order => order.products);
             }
         },
         user: {
@@ -22,7 +22,7 @@ const OrderType = new GraphQLObjectType({
             resolve(parentValue){
                 return Order.findById(parentValue.id)
                     .populate("user")
-                    .then(order => order.user)
+                    .then(order => order.user);
             }
         }
     })
