@@ -166,6 +166,7 @@ const mutation = new GraphQLObjectType({
         newOrder: {
             type: OrderType,
             args: {
+                token: { type: GraphQLString },
                 products: { type: GraphQLList(GraphQLID) },
                 total: { type: GraphQLInt },
                 // prices: { type: GraphQLList(GraphQLInt) },
@@ -185,38 +186,39 @@ const mutation = new GraphQLObjectType({
 
             },
             async resolve(_, { 
-                products, user, total, shipping_name, shipping_address1, shipping_address2, shipping_city,
+                token, products, user, total, shipping_name, shipping_address1, shipping_address2, shipping_city,
                 shipping_state, shipping_zipcode, billing_name, billing_address1, billing_address2, billing_city,
                 billing_state, billing_zipcode
             }, ctx) {
                 // validatePrice fn
                 const order = {
-                    user,
-                    products,
-                    total,
-                    paymentInfo: {
-                        gateway: "Stripe"
-                    },
-                    billingInfo: {
-                        name: billing_name,
-                        address1: billing_address1,
-                        address2: billing_address2,
-                        city: billing_city,
-                        state: billing_state,
-                        zipcode: billing_zipcode
-                    },
-                    shippingInfo: {
-                        name: shipping_name,
-                        address1: shipping_address1,
-                        address2: shipping_address2,
-                        city: shipping_city,
-                        state: shipping_state,
-                        zipcode: shipping_zipcode
-                    }
+                  products,
+                  total,
+                  paymentInfo: {
+                    gateway: "Stripe",
+                    token
+                  },
+                  billingInfo: {
+                    name: billing_name,
+                    address1: billing_address1,
+                    address2: billing_address2,
+                    city: billing_city,
+                    state: billing_state,
+                    zipcode: billing_zipcode
+                  },
+                  shippingInfo: {
+                    name: shipping_name,
+                    address1: shipping_address1,
+                    address2: shipping_address2,
+                    city: shipping_city,
+                    state: shipping_state,
+                    zipcode: shipping_zipcode
+                  }
                 };
+                if (user) order.user = user;
                 return new Order(order).save();
             }
-        }     
+        }
     }
 });
 

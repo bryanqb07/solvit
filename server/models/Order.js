@@ -70,11 +70,11 @@ const OrderSchema = new Schema({
         gateway: { 
             type: String,
             required: true 
+        },
+        token: { 
+            type: String,
+            required: true
         }
-        // status: { 
-        //     type: String,
-        //     default: true
-        // }
     },
     total: {
         type: Number,

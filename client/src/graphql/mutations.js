@@ -98,6 +98,7 @@ export const DELETE_CATEGORY = gql`
 
 export const CREATE_ORDER = gql`
     mutation CreateOrder(
+        $token: String!
         $products: [ID]!, 
         $total: Int!, 
         $user: ID,
@@ -115,6 +116,7 @@ export const CREATE_ORDER = gql`
         $billing_zipcode: String!
         ){
         newOrder(
+            token: $token,
             products: $products, 
             total: $total, 
             user: $user,

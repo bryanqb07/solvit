@@ -10,7 +10,7 @@ const AddItemToCart = ({id, price, name}) => {
                 {({ loading, error, data }) => {
                     if (loading) return <div class="loader">Loading...</div>
                     if (error) return `Error! ${error.message}`;
-                    
+                    if(!data) return;
                     if(data.cart.some(item => item.id === id)){
                         return (
                             <button onClick={e => {

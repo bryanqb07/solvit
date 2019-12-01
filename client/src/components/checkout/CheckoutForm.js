@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Query, Mutation } from "react-apollo";
 import { FETCH_CART_ITEMS } from "../../graphql/queries";
 import { CREATE_ORDER } from "../../graphql/mutations";
+import { CardElement, injectStripe } from "react-stripe-elements";
 import ShippingForm from "./ShippingForm";
 
 class CheckoutForm extends Component {
@@ -32,31 +33,32 @@ class CheckoutForm extends Component {
         };
         this.toggleCheck = this.toggleCheck.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.stateList = ["--Select State--", "Alabama", "Arkansas", "Florida", "Georgia", "Kentucky", "Louisiana", "Mississippi", 
+            "North Carolina", "South Carolina", "Tennessee"];
     }
 
     toggleCheck(e){
         if(this.state.checked){
             this.setState({ 
-                billing_name: "",
-                billing_address1: "",
-                billing_address2: "",
-                billing_city: "",
-                billing_state: "",
-                billing_zipcode: "",
+                shipping_name: "",
+                shipping_address1: "",
+                shipping_address2: "",
+                shipping_city: "",
+                shipping_state: "",
+                shipping_zipcode: "",
                 checked: false 
             });
         }else{
             this.setState({
-                billing_name: this.state.shipping_name,
-                billing_address1: this.state.shipping_address1,
-                billing_address2: this.state.shipping_address2,
-                billing_city: this.state.shipping_city,
-                billing_state: this.state.shipping_state,
-                billing_zipcode: this.state.shipping_zipcode,
+                shipping_name: this.state.billing_name,
+                shipping_address1: this.state.billing_address1,
+                shipping_address2: this.state.billing_address2,
+                shipping_city: this.state.billing_city,
+                shipping_state: this.state.billing_state,
+                shipping_zipcode: this.state.billing_zipcode,
                 checked: true
             });
         }
-        this.setState({ checked: !this.state.checked });
     }
 
     updateShipping(field) {
@@ -80,14 +82,16 @@ class CheckoutForm extends Component {
         });
     }
     
-    handleSubmit(e, newOrder) {
+    async handleSubmit(e, newOrder) {
         e.preventDefault();
+        let {token} = await this.props.stripe.createToken({name: "Name"}); 
+        console.log(token);
         newOrder({
             variables: {
                 user: this.state.user,
                 products: this.state.products,
-                total: this.state.total,
-
+                total: parseInt(this.state.total),
+                token: token.id,
                 shipping_name: this.state.shipping_name,
                 shipping_address1: this.state.shipping_address1,
                 shipping_address2: this.state.shipping_address2,
@@ -123,148 +127,149 @@ class CheckoutForm extends Component {
                 {
                     console.log(this.state);
                     return (
-                        <div>
-                            <div>
-                                <h3>Shipping Information</h3>
-                                <form>
-                                    <label>Name</label>
-                                    <input
-                                        onChange={this.updateShipping("name")}
-                                        value={this.state.shipping_name}
-                                        placeholder="Name"
-                                        type="text"
-                                    />
-                                    <br />
-                                    <label>Address Line 1</label>
-                                    <input
-                                        onChange={this.updateShipping("address1")}
-                                        value={this.state.shipping_address1}
-                                        placeholder="Address Line 1"
-                                        type="text"
-                                    />
-                                    <br />
-                                    <label>Address Line 2</label>
-                                    <input
-                                        onChange={this.updateShipping("address2")}
-                                        value={this.state.shipping_address2}
-                                        placeholder="Address Line 2"
-                                        type="text"
-                                    />
-                                    <br />
-                                    <label>City</label>
-                                    <input
-                                        onChange={this.updateShipping("city")}
-                                        value={this.state.shipping_city}
-                                        placeholder="City"
-                                        type="text"
-                                    />
-                                    <br />
-                                    <label>State</label>
-                                    <select
-                                        onChange={this.updateShipping("state")}
-                                        value={this.state.shipping_state}
-                                        placeholder="State"
-                                        type="text"
-                                    >
-                                        <option value="Alabama">Alabama</option>
-                                        <option value="Arkansas">Arkansas</option>
-                                        <option value="Florida">Florida</option>
-                                        <option value="Georgia">Georgia</option>
-                                        <option value="Kentucky">Kentucky</option>
-                                        <option value="Louisiana">Louisiana</option>
-                                        <option value="Mississippi">Mississippi</option>
-                                        <option value="North Carolina">North Carolina</option>
-                                        <option value="South Carolina">South Carolina</option>
-                                        <option value="Tennessee">Tennessee</option> <option value="Texas">Texas</option>
-                                    </select>
-                                    <br />
-                                    <label>Zip Code</label>
-                                    <input
-                                        onChange={this.updateShipping("zipcode")}
-                                        value={this.state.shipping_zipcode}
-                                        placeholder="Zip Code"
-                                        type="text"
-                                    />
-                                </form>
-                            </div>
+                      <div>
+                        <div className="checkout">
+                          <h3>Billing Information</h3>
+                          <form>
+                            <label>Name</label>
+                            <input
+                              onChange={this.updateShipping("name")}
+                              value={this.state.billing_name}
+                              placeholder="Name"
+                              type="text"
+                            />
                             <br />
-                            <label>Billing Info Matches Shipping Info</label>
-                            <input type="checkbox" checked={this.state.checked} onChange={this.toggleCheck} />
+                            <label>Credit Card Details</label>
+                            <CardElement />
                             <br />
-                            {this.state.checked ? "" : (
-                            <div>
-                                <h3>Billing Information</h3>
-                                <form>
-                                    <label>Name</label>
-                                    <input
-                                        onChange={this.update("billing_name")}
-                                        value={this.state.billing_name}
-                                        placeholder="Name"
-                                        type="text"
-                                    />
-                                    <br />
-                                    <label>Address Line 1</label>
-                                    <input
-                                        onChange={this.update("billing_address1")}
-                                        value={this.state.billing_address1}
-                                        placeholder="Address Line 1"
-                                        type="text"
-                                    />
-                                    <br />
-                                    <label>Address Line 2</label>
-                                    <input
-                                        onChange={this.update("billing_address2")}
-                                        value={this.state.billing_address2}
-                                        placeholder="Address Line 2"
-                                        type="text"
-                                    />
-                                    <br />
-                                    <label>City</label>
-                                    <input
-                                        onChange={this.update("billing_city")}
-                                        value={this.state.billing_city}
-                                        placeholder="City"
-                                        type="text"
-                                    />
-                                    <br />
-                                    <label>State</label>
-                                    <select
-                                        onChange={this.update("billing_state")}
-                                        value={this.state.billing_state}
-                                        placeholder="State"
-                                        type="text"
-                                    >
-                                        <option value="Alabama">Alabama</option>
-                                        <option value="Arkansas">Arkansas</option>
-                                        <option value="Florida">Florida</option>
-                                        <option value="Georgia">Georgia</option>
-                                        <option value="Kentucky">Kentucky</option>
-                                        <option value="Louisiana">Louisiana</option>
-                                        <option value="Mississippi">Mississippi</option>
-                                        <option value="North Carolina">North Carolina</option>
-                                        <option value="South Carolina">South Carolina</option>
-                                        <option value="Tennessee">Tennessee</option> <option value="Texas">Texas</option>
-                                    </select>
-                                    <br />
-                                    <label>Zip Code</label>
-                                    <input
-                                        onChange={this.update("billing_zipcode")}
-                                        value={this.state.billing_zipcode}
-                                        placeholder="Zip Code"
-                                        type="text"
-                                    />
-                                </form>
-                            </div>
-                            )}
-                            <br/>
-                            <button onClick={e => this.handleSubmit(e, newOrder)}>Submit Order</button>
-                            <p>{this.state.message}</p>
+                            <label>Address Line 1</label>
+                            <input
+                              onChange={this.updateShipping("address1")}
+                              value={this.state.billing_address1}
+                              placeholder="Address Line 1"
+                              type="text"
+                            />
+                            <br />
+                            <label>Address Line 2</label>
+                            <input
+                              onChange={this.updateShipping("address2")}
+                              value={this.state.billing_address2}
+                              placeholder="Address Line 2"
+                              type="text"
+                            />
+                            <br />
+                            <label>City</label>
+                            <input
+                              onChange={this.updateShipping("city")}
+                              value={this.state.billing_city}
+                              placeholder="City"
+                              type="text"
+                            />
+                            <br />
+                            <label>State</label>
+                            <select
+                              onChange={this.updateShipping("state")}
+                              value={this.state.billing_state}
+                              placeholder="State"
+                              type="text"
+                            >
+                              {this.stateList.map(state => (
+                                <option value={state} key={state}>
+                                  {state}
+                                </option>
+                              ))}
+                            </select>
+                            <br />
+                            <label>Zip Code</label>
+                            <input
+                              onChange={this.updateShipping("zipcode")}
+                              value={this.state.billing_zipcode}
+                              placeholder="Zip Code"
+                              type="text"
+                            />
+                          </form>
                         </div>
-                    )
+                        <br />
+                        <label>Shipping Info Matches Billing Info</label>
+                        <input
+                          type="checkbox"
+                          checked={this.state.checked}
+                          onChange={this.toggleCheck}
+                        />
+                        <br />
+                        {this.state.checked ? (
+                          ""
+                        ) : (
+                          <div>
+                            <h3>Shipping Information</h3>
+                            <form>
+                              <label>Name</label>
+                              <input
+                                onChange={this.update("shipping_name")}
+                                value={this.state.shipping_name}
+                                placeholder="Name"
+                                type="text"
+                              />
+                              <br />
+                              <label>Address Line 1</label>
+                              <input
+                                onChange={this.update("shipping_address1")}
+                                value={this.state.shipping_address1}
+                                placeholder="Address Line 1"
+                                type="text"
+                              />
+                              <br />
+                              <label>Address Line 2</label>
+                              <input
+                                onChange={this.update("shipping_address2")}
+                                value={this.state.shipping_address2}
+                                placeholder="Address Line 2"
+                                type="text"
+                              />
+                              <br />
+                              <label>City</label>
+                              <input
+                                onChange={this.update("shipping_city")}
+                                value={this.state.shipping_city}
+                                placeholder="City"
+                                type="text"
+                              />
+                              <br />
+                              <label>State</label>
+                              <select
+                                onChange={this.update("shipping_state")}
+                                value={this.state.shipping_state}
+                                placeholder="State"
+                                type="text"
+                              >
+                                {this.stateList.map(state => (
+                                  <option value={state} key={state}>
+                                    {state}
+                                  </option>
+                                ))}
+                              </select>
+                              <br />
+                              <label>Zip Code</label>
+                              <input
+                                onChange={this.update("shipping_zipcode")}
+                                value={this.state.shipping_zipcode}
+                                placeholder="Zip Code"
+                                type="text"
+                              />
+                            </form>
+                          </div>
+                        )}
+                        <br />
+                        <button onClick={e => this.handleSubmit(e, newOrder)}>
+                          Complete Purchase
+                        </button>
+                        <p>{this.state.message}</p>
+                      </div>
+                    );
                 }}
             </Mutation>
         )
     }
 }
 
-export default CheckoutForm;
+export default injectStripe(CheckoutForm);
