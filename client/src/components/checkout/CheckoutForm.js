@@ -4,15 +4,17 @@ import { FETCH_CART_ITEMS } from "../../graphql/queries";
 import { CREATE_ORDER } from "../../graphql/mutations";
 import { CardElement, injectStripe } from "react-stripe-elements";
 import ShippingForm from "./ShippingForm";
+import { withRouter } from "react-router";
+
 
 class CheckoutForm extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            user: this.props.user ? this.props.user : "",
+            user: this.props.user ? this.props.user : null,
             products: this.props.products ? this.props.products : "",
-            total: this.props.total ? this.props.total : "",
+            total: this.props.total ? this.props.total : null,
 
             shipping_name: "",
             shipping_address1: "",
@@ -76,17 +78,19 @@ class CheckoutForm extends Component {
     }
 
     updateCache(cache, { data }) {
-        return;
-        // cache.writeQuery({
-        //     query: FETCH_CART_ITEMS,
-        //     data: { cart: [] }
-        // });
+        cache.writeData({
+          data: {
+            isLoggedIn: this.state.user ? true : false,
+            isStaff: false,
+            cart: [],
+            userId: this.state.user ? this.state.user : null
+          }
+        });
     }
     
     async handleSubmit(e, newOrder) {
         e.preventDefault();
         let {token} = await this.props.stripe.createToken({name: "Name"}); 
-        console.log(token);
         newOrder({
             variables: {
                 user: this.state.user,
@@ -110,6 +114,10 @@ class CheckoutForm extends Component {
         });
     }
 
+    componentWillUnmount(){
+        this.props.history.push("/confirmation");
+    }
+
     render() {
         return (
             <Mutation
@@ -118,6 +126,7 @@ class CheckoutForm extends Component {
                 // update cache on product creation
                 update={(cache, data) => this.updateCache(cache, data)}
                 onCompleted={data => {
+                    const newOrder = data.newOrder;
                     this.setState({
                         message: `New order created successfully`
                     })
@@ -273,4 +282,4 @@ class CheckoutForm extends Component {
     }
 }
 
-export default injectStripe(CheckoutForm);
+export default withRouter(injectStripe(CheckoutForm));

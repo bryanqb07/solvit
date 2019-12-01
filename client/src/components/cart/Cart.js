@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { FETCH_CART_ITEMS } from "../../graphql/queries";
 import { Query } from "react-apollo";
 import CartItem from "./CartItem";
+import RemoveItemFromCart from "../RemoveFromCart";
+
 
 function Cart() {
     return (
@@ -15,8 +17,9 @@ function Cart() {
                     return (
                         <ul>
                             { data.cart.map(cartItem => (
-                                <li key={cartItem.id}>
+                            <li key={cartItem.id}>
                                 <CartItem cartItem={cartItem} />
+                                <RemoveItemFromCart id={cartItem.id} />
                             </li> 
                             )) }
                             <li>Total: ${data.cart.map(item => item.price).reduce((acc, cv) => acc + cv)}</li>
