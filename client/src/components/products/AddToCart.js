@@ -8,7 +8,7 @@ const AddItemToCart = ({id, price, name}) => {
             {cache => (
             <Query query={FETCH_CART_ITEMS} variables={{ productId: id }}>
                 {({ loading, error, data }) => {
-                    if (loading) return <div class="loader">Loading...</div>
+                    if (loading) return <div className="loader">Loading...</div>
                     if (error) return `Error! ${error.message}`;
                     if(!data) return;
                     if(data.cart.some(item => item.id === id)){

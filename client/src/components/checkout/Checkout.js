@@ -44,9 +44,9 @@ const Checkout = () => {
                       </div>
                     );
                 } else {
-                    return (
-                        <div>Cart is empty.</div>
-                    )
+                  return (
+                      <div>Cart is empty.</div>
+                  )
                 }
             }}
         </Query>

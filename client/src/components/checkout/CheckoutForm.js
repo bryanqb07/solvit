@@ -3,9 +3,7 @@ import { Query, Mutation } from "react-apollo";
 import { FETCH_CART_ITEMS } from "../../graphql/queries";
 import { CREATE_ORDER } from "../../graphql/mutations";
 import { CardElement, injectStripe } from "react-stripe-elements";
-import ShippingForm from "./ShippingForm";
 import { withRouter } from "react-router";
-
 
 class CheckoutForm extends Component {
     constructor(props) {
@@ -77,16 +75,18 @@ class CheckoutForm extends Component {
         return e => this.setState({ [field]: e.target.value });
     }
 
-    updateCache(cache, { data }) {
-        cache.writeData({
-          data: {
-            isLoggedIn: this.state.user ? true : false,
-            isStaff: false,
-            cart: [],
-            userId: this.state.user ? this.state.user : null
-          }
-        });
-    }
+    // updateCache(cache, { data }) {
+    //   console.log(data.newOrder);
+    //     cache.writeData({
+    //       data: {
+    //         isLoggedIn: this.state.user ? true : false,
+    //         isStaff: false,
+    //         cart: [],
+    //         userId: this.state.user ? this.state.user : null,
+    //         order: true
+    //       }
+    //     });
+    // }
     
     async handleSubmit(e, newOrder) {
         e.preventDefault();
@@ -114,28 +114,27 @@ class CheckoutForm extends Component {
         });
     }
 
-    componentWillUnmount(){
-        this.props.history.push("/confirmation");
-    }
-
     render() {
         return (
             <Mutation
                 mutation={CREATE_ORDER}
                 onError={err => this.setState({ message: err.message })}
                 // update cache on product creation
-                update={(cache, data) => this.updateCache(cache, data)}
+                // update={(cache, data) => this.updateCache(cache, data)}
                 onCompleted={data => {
-                    const newOrder = data.newOrder;
                     this.setState({
                         message: `New order created successfully`
                     })
-                }
-                }
+                    const query_params = `id=${data.newOrder.id}`;
+
+                    this.props.history.push({
+                      pathname: "/confirmation",
+                      search: query_params
+                    });
+                  }}
             >
                 {(newOrder, { data }) => 
                 {
-                    console.log(this.state);
                     return (
                       <div>
                         <div className="checkout">
