@@ -75,19 +75,6 @@ class CheckoutForm extends Component {
         return e => this.setState({ [field]: e.target.value });
     }
 
-    // updateCache(cache, { data }) {
-    //   console.log(data.newOrder);
-    //     cache.writeData({
-    //       data: {
-    //         isLoggedIn: this.state.user ? true : false,
-    //         isStaff: false,
-    //         cart: [],
-    //         userId: this.state.user ? this.state.user : null,
-    //         order: true
-    //       }
-    //     });
-    // }
-    
     async handleSubmit(e, newOrder) {
         e.preventDefault();
         let {token} = await this.props.stripe.createToken({name: "Name"}); 
