@@ -23,7 +23,7 @@ function Cart() {
                                         <RemoveItemFromCart id={cartItem.id} />
                                     </li>
                                 ))}
-                                <li>Total: ${data.cart.map(item => item.price).reduce((acc, cv) => acc + cv)}</li>
+                                <li>Total: ${data.cart.map(item => item.total).reduce((acc, cv) => acc + cv)}</li>
                                 <Link to="/checkout">Checkout</Link>
                             </ul>
                         </div>

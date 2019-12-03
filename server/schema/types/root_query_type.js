@@ -130,7 +130,9 @@ const RootQueryType = new GraphQLObjectType({
                     const diffTime = finish.getTime() - start.getTime();
                     const numDays = diffTime / (1000 * 3600 * 24);
                     if(numDays <= 0) throw "Invalid date range";
-                    product.price = product.computePrice(totalFeet, numDays);
+                    const { price, installationFee } = product.computePrice(totalFeet, numDays);
+                    product.price = price;
+                    product.installationFee = installationFee;
                     return product;
                 });     
             }

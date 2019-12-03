@@ -21,6 +21,7 @@ const ProductType = new GraphQLObjectType({
             }
         },
         price: { type: GraphQLFloat },
+        installationFee: { type: GraphQLFloat },
         width: { type: GraphQLFloat },
         height: { type: GraphQLFloat },
         flatInstallationFee: { type: GraphQLFloat },

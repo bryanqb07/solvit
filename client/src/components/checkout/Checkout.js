@@ -13,7 +13,7 @@ const Checkout = () => {
                 if (loading) return <div className="loader">Loading...</div>
                 if (error) return `Error! ${error.message}`;
                 if (data && data.cart && data.cart.length > 0) {
-                    let total = data.cart.map(item => item.price).reduce((acc, cv) => acc + cv);
+                    let total = data.cart.map(item => item.total).reduce((acc, cv) => acc + cv);
                     let productIdList = data.cart.map(item => item.id);
                     const user = data.userId
                     return (

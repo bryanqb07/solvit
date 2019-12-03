@@ -156,7 +156,8 @@ export const FETCH_PRODUCT_PRICE = gql`
     getProductPrice(id: $id, totalFeet: $totalFeet, startDate: $startDate, endDate: $endDate){
       id,
       name
-      price
+      price,
+      installationFee
     }
   }
 `;

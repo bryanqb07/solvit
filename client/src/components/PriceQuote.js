@@ -62,10 +62,13 @@ class PriceQuote extends Component{
                         {({ loading, error, data }) => {
                             if (loading) return <div className="loader">Loading...</div>
                             if (error) return `Error! ${error.message}`;
-                            const { id, name, price } = data.getProductPrice
+                            const { id, name, price, installationFee } = data.getProductPrice
+                            const total = price + installationFee
                             return (
                             <div>
-                                <p>Here's your price ${price}</p>
+                                <p>Subtotal: ${price}</p>
+                                <p>Installation fee: ${installationFee}</p>
+                                <p>Total: ${total}</p>
                                 <AddItemToCart price={price} id={id} name={name} />
                                     <button onClick={e => {
                                         e.preventDefault();
@@ -76,7 +79,14 @@ class PriceQuote extends Component{
                                         // create our object with the id and cost from our props and add it to
                                         // the array of cart items
                                         const data = {
-                                            cart: [...cart, { id, price, name }]
+                                            cart: [...cart, {
+                                                name, 
+                                                id, 
+                                                startDate: this.state.startDate,
+                                                endDate: this.state.endDate,
+                                                subtotal: price, 
+                                                installationFee, 
+                                                total }]
                                         }
                                         cache.writeQuery({ query: FETCH_CART_ITEMS, data })
                                         this.props.history.push("/checkout");

@@ -32,8 +32,8 @@ const ProductSchema = new Schema({
   perFtUnitPriceThreeMonths: { type: Number },
   perFtUnitPriceSixMonths: { type: Number },
   perFtUnitPriceNineMonths: { type: Number },
-  perFtUnitPriceTwelveMonths: { type: Number },
-  price: { type: Number }
+  perFtUnitPriceTwelveMonths: { type: Number }
+  // price: { type: Number }
   // image: {
   //   type: String
   // }
@@ -70,26 +70,27 @@ ProductSchema.statics.updateProductCategory = (productId, categoryId) => {
 };
 
 ProductSchema.methods.computePrice = function(totalFeet, duration){
-  let total = this.flatInstallationFee + this.perFtInstallationFee * totalFeet;
+  const priceObject = {};
+  priceObject.installationFee = this.flatInstallationFee + this.perFtInstallationFee * totalFeet;
   
   if (duration <= 90){
-    total += this.perFtUnitPriceThreeMonths * totalFeet;
+    priceObject.price = this.perFtUnitPriceThreeMonths * totalFeet;
   } 
   else if(duration > 90 && duration <= 180){
-    total += this.perFtUnitPriceSixMonths * totalFeet;
+    priceObject.price = this.perFtUnitPriceSixMonths * totalFeet;
   }    
   else if(duration > 180 && duration <= 270){
-    total += this.perFtUnitPriceNineMonths * totalFeet;
+    priceObject.price = this.perFtUnitPriceNineMonths * totalFeet;
   }
       
   else if(duration > 270 && duration <= 365){
-    total += this.perFtUnitPriceTwelveMonths * totalFeet;
+    priceObject.price = this.perFtUnitPriceTwelveMonths * totalFeet;
   }
   else{
-      return "Error";
+      throw "Invalid price quote params";
   }
   
-  return total;
+  return priceObject;
 };
 
 module.exports = mongoose.model("product", ProductSchema);

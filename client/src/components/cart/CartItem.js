@@ -4,7 +4,7 @@ const CartItem = ({cartItem}) => (
     <div>
         <span>Name: {cartItem.name}</span>
         <br />
-        <span>Price: ${cartItem.price}</span>
+        <span>Price: ${cartItem.total}</span>
     </div>
 )
 
