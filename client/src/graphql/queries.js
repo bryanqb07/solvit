@@ -151,6 +151,8 @@ export const FETCH_PRODUCT_AND_CATEGORIES = gql`
 export const FETCH_PRODUCT_PRICE = gql`
   query FetchProductPrice($id: ID!){
     getProductPrice(id: $id){
+      id,
+      name
       price
     }
   }

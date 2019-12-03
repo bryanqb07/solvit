@@ -10,6 +10,14 @@ const OrderSchema = new Schema({
         type: String,
         required: true
     },
+    startDate: {
+        type: Date,
+        required: true
+    },
+    endDate: {
+        type: Date,
+        required: true
+    },
     products: [
         {
             type: Schema.Types.ObjectId,
