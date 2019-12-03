@@ -131,3 +131,18 @@ textarea{
 .space-evenly{
   justify-content: space-evenly;
 }
+
+.search {    
+    width: 200px;
+    padding: 5px;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    transition: all .5s ease;
+    border-radius: 10px;
+    margin-right: 5px;
+    font-size: 18px;  
+}
+
+.hidden{
+  display: none;
+}

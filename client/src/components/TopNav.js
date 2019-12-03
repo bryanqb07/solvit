@@ -8,7 +8,8 @@ class TopNav extends Component{
         super(props);
         this.state = {
             clickCount: 0,
-            queryString: ""
+            queryString: "",
+            inputClass: "search hidden"
         };
         this.handleClick = this.handleClick.bind(this);
         // this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -32,12 +33,12 @@ class TopNav extends Component{
     handleClick(e){
         e.preventDefault();
         if(this.state.clickCount === 0){
-            // show input form
-            this.setState({ clickCount: this.state.clickCount + 1 });
+            this.setState({ inputClass: "search", clickCount: this.state.clickCount + 1 });
         }else{
             this.setState({
                 clickCount: 0,
-                queryString: ""
+                queryString: "",
+                inputClass: "search hidden"
             });
             this.props.history.push({
                 pathname: "/search",
@@ -53,6 +54,7 @@ class TopNav extends Component{
                 <p className="w3-right">
                     <Link to="/cart"><i className="fa fa-shopping-cart w3-margin-right"></i></Link>
                     <input 
+                        className={this.state.inputClass}
                         type="text" 
                         placeholder="Search product..." 
                         value={this.state.queryString}
