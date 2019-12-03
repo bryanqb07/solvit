@@ -1,18 +1,69 @@
-import React from 'react';
+import React, { Component } from "react";
 import CartContainer from './cart/CartContainer';
 import { Link } from 'react-router-dom';
+import { withRouter } from "react-router";
 
-const TopNav = (props) => (
-    <header className="w3-container w3-xlarge">
-        <p className="w3-left"></p>
-        <p className="w3-right">
-            <Link to="/cart"><i className="fa fa-shopping-cart w3-margin-right"></i></Link>
-            <form onSubmit={props.history.push("/search")}>
-                <input type="text" placeholder="Search product..."/>
-            </form>
-            <i className="fa fa-search"></i>
-        </p>
-    </header>
-);
+class TopNav extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            clickCount: 0,
+            queryString: ""
+        };
+        this.handleClick = this.handleClick.bind(this);
+        // this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
 
-export default TopNav;
+    handleChange(e){
+        this.setState({ queryString: e.target.value });
+    }
+
+    // handleKeyDown(e){
+    //     e.preventDefault(e);
+    //     // if (e.key === 'Enter') {
+    //     //     this.props.history.push({
+    //     //         pathname: "/",
+    //     //         search: `queryString=${this.state.queryString}`
+    //     //     });
+    //     // }
+    // }
+
+    handleClick(e){
+        e.preventDefault();
+        if(this.state.clickCount === 0){
+            // show input form
+            this.setState({ clickCount: this.state.clickCount + 1 });
+        }else{
+            this.setState({
+                clickCount: 0,
+                queryString: ""
+            });
+            this.props.history.push({
+                pathname: "/search",
+                search: `queryString=${this.state.queryString}`
+            });
+        }
+    }
+
+    render(){
+        return(
+            <header className="w3-container w3-xlarge">
+                <p className="w3-left"></p>
+                <p className="w3-right">
+                    <Link to="/cart"><i className="fa fa-shopping-cart w3-margin-right"></i></Link>
+                    <input 
+                        type="text" 
+                        placeholder="Search product..." 
+                        value={this.state.queryString}
+                        onChange={this.handleChange} 
+                        />
+
+                    <i className="fa fa-search" onClick={this.handleClick}></i>
+                </p>
+            </header>
+        )
+    }
+}
+
+export default withRouter(TopNav);

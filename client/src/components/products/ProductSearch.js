@@ -4,13 +4,16 @@ import { Query } from "react-apollo";
 import ProductContainer from "./ProductContainer";
 
 const ProductsSearch = (props) => {
+    const queryString = { queryString: props.history.location.search.split("=")[1] };
+    // console.log(queryString);
     return(
-        <Query query={SEARCH_PRODUCTS}>
+        <Query query={SEARCH_PRODUCTS} variables={queryString}>
             {({ loading, error, data }) => {
                 if (loading) return <div className="loader">Loading...</div>
                 if (error) return `Error! ${error.message}`;
-
-                return <ProductContainer products={data.products} nonStaff={true} />
+                const products = data.searchProducts;
+                if(!products) return <div>No products found. Please search again.</div>
+                return <ProductContainer products={products} nonStaff={true} />
             }}
         </Query>
     )
