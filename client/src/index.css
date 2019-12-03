@@ -88,9 +88,9 @@ textarea{
   border: 1px solid lightgray;
 }
 
-.product-form span{
-  width: 200px;
-}
+/* .product-form input, textarea{
+  width: 300px;
+} */
 
 .undecorated{
   text-decoration: none;
@@ -149,4 +149,12 @@ textarea{
 
 .hidden{
   display: none;
+}
+
+.dollar-sign{
+  margin-left: 5px;
+}
+
+button{
+  cursor: pointer;
 }

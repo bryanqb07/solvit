@@ -11,14 +11,15 @@ function ProductDetail(props) {
             {({ loading, error, data }) => {
                 if (loading) return <div className="loader">Loading...</div>
                 if (error) return `Error! ${error.message}`;
-
+                
                 const product = data.product;
+
                 return (
                     <div>
                         <img src="testFence.png" alt="product"></img>
                         <p>Name: {product.name}</p>
                         <p>Description: {product.description}</p>
-                        <p>Price: ${product.price}</p>
+                        <p>Dimensions: {product.width} x {product.height} ft.</p>
                         <PriceQuote id={product.id}/>
                     </div>
                 )

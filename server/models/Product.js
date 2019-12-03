@@ -18,14 +18,22 @@ const ProductSchema = new Schema({
     type: String,
     required: true
   },
-  weight: {
-    type: Number,
-    required: false
-  },
-  price: {
+  width: {
     type: Number,
     required: true
   },
+  height: {
+    type: Number,
+    required: true
+  },
+  flatInstallationFee: { type: Number },
+  perFtInstallationFee: { type: Number },
+  unitPrice: { type: Number },
+  perFtUnitPriceThreeMonths: { type: Number },
+  perFtUnitPriceSixMonths: { type: Number },
+  perFtUnitPriceNineMonths: { type: Number },
+  perFtUnitPriceTwelveMonths: { type: Number },
+  price: { type: Number }
   // image: {
   //   type: String
   // }
@@ -61,8 +69,27 @@ ProductSchema.statics.updateProductCategory = (productId, categoryId) => {
     });
 };
 
-ProductSchema.methods.computePrice = function(){
-  return this.price;
+ProductSchema.methods.computePrice = function(totalFeet, duration){
+  let total = this.flatInstallationFee + this.perFtInstallationFee * totalFeet;
+  
+  if (duration <= 90){
+    total += this.perFtUnitPriceThreeMonths * totalFeet;
+  } 
+  else if(duration > 90 && duration <= 180){
+    total += this.perFtUnitPriceSixMonths * totalFeet;
+  }    
+  else if(duration > 180 && duration <= 270){
+    total += this.perFtUnitPriceNineMonths * totalFeet;
+  }
+      
+  else if(duration > 270 && duration <= 365){
+    total += this.perFtUnitPriceTwelveMonths * totalFeet;
+  }
+  else{
+      return "Error";
+  }
+  
+  return total;
 };
 
 module.exports = mongoose.model("product", ProductSchema);

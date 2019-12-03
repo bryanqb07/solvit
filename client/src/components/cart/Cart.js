@@ -5,7 +5,6 @@ import { Query } from "react-apollo";
 import CartItem from "./CartItem";
 import RemoveItemFromCart from "../RemoveFromCart";
 
-
 function Cart() {
     return (
         <Query query={FETCH_CART_ITEMS}>
@@ -15,20 +14,26 @@ function Cart() {
                 if(!data) return null;
                 if(data.cart.length > 0){
                     return (
-                        <ul>
-                            { data.cart.map(cartItem => (
-                            <li key={cartItem.id}>
-                                <CartItem cartItem={cartItem} />
-                                <RemoveItemFromCart id={cartItem.id} />
-                            </li> 
-                            )) }
-                            <li>Total: ${data.cart.map(item => item.price).reduce((acc, cv) => acc + cv)}</li>
-                            <Link to="/checkout">Checkout</Link>
-                        </ul>
+                        <div>
+                            <h3>Your Shopping Cart</h3>
+                            <ul>
+                                {data.cart.map(cartItem => (
+                                    <li key={cartItem.id}>
+                                        <CartItem cartItem={cartItem} />
+                                        <RemoveItemFromCart id={cartItem.id} />
+                                    </li>
+                                ))}
+                                <li>Total: ${data.cart.map(item => item.price).reduce((acc, cv) => acc + cv)}</li>
+                                <Link to="/checkout">Checkout</Link>
+                            </ul>
+                        </div>
                     )
                 }else{
                     return (
-                        <div>Cart is empty.</div>   
+                        <div>
+                            <h3>Your Shopping Cart</h3>
+                            <p>Cart is empty.</p>
+                        </div>   
                     )
                 }
             }}

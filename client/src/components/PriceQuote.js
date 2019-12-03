@@ -8,23 +8,57 @@ class PriceQuote extends Component{
     constructor(props){
         super(props);
         this.state = {
-            clicked: false
+            clicked: false,
+            startDate: "",
+            endDate: "",
+            totalFeet: 0
         };
     }
 
+    update(field) {
+        return e => this.setState({ [field]: e.target.value });
+    }
+
     render(){
+        console.log(this.state);
         if(!this.state.clicked){
             return(
-                <button onClick={e => {
-                    e.preventDefault();
-                    this.setState({clicked: true})
-                }}>Get instant quote</button>
+                <div>
+                    <label>Start Date: </label>
+                    <input
+                        onChange={this.update("startDate")}
+                        value={this.state.startDate} 
+                        type="date" />
+                    <br />
+                    <label>End Date: </label>
+                    <input
+                        onChange={this.update("endDate")}
+                        value={this.state.endDate} 
+                        type="date" />
+                    <br />
+                    <label>Total Area (ft.)</label>
+                    <input
+                        onChange={this.update("totalFeet")}
+                        value={this.state.totalFeet}
+                        type="number" />
+                    <br />
+                    <button onClick={e => {
+                        e.preventDefault();
+                        this.setState({ clicked: true })
+                    }}>Get instant quote</button>
+                </div>
             );
         }
+        const priceParams = {
+            id: this.props.id,
+            totalFeet: parseFloat(this.state.totalFeet),
+            startDate: this.state.startDate,
+            endDate: this.state.endDate
+        };
         return(
             <ApolloConsumer>
                 {cache => (
-                    <Query query={FETCH_PRODUCT_PRICE} variables={{ id: this.props.id }}>
+                    <Query query={FETCH_PRODUCT_PRICE} variables={priceParams}>
                         {({ loading, error, data }) => {
                             if (loading) return <div className="loader">Loading...</div>
                             if (error) return `Error! ${error.message}`;

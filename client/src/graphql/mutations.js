@@ -31,13 +31,39 @@ export const REGISTER_USER = gql`
 `;
 
 export const CREATE_PRODUCT = gql`
-    mutation CreateProduct($name: String!, $description: String!, $weight: Int!, $price: Int!, $category: ID!){
-        newProduct(name: $name, description: $description, weight: $weight, price: $price, category: $category){
+    mutation CreateProduct(
+        $name: String!, 
+        $description: String!, 
+        $width: Float!, 
+        $height: Float!, 
+        $category: ID!,
+        $flatInstallationFee: Float!,
+        $perFtInstallationFee: Float!,
+        $unitPrice: Float!,
+        $perFtUnitPriceThreeMonths: Float!,
+        $perFtUnitPriceSixMonths: Float!,
+        $perFtUnitPriceNineMonths: Float!,
+        $perFtUnitPriceTwelveMonths: Float!
+        ){
+        newProduct(
+            name: $name, 
+            description: $description, 
+            width: $width, 
+            height: $height, 
+            category: $category,
+            flatInstallationFee: $flatInstallationFee,
+            perFtInstallationFee: $perFtInstallationFee,
+            unitPrice: $unitPrice,
+            perFtUnitPriceThreeMonths: $perFtUnitPriceThreeMonths,
+            perFtUnitPriceSixMonths: $perFtUnitPriceSixMonths,
+            perFtUnitPriceNineMonths: $perFtUnitPriceNineMonths,
+            perFtUnitPriceTwelveMonths: $perFtUnitPriceTwelveMonths        
+        ){
             id,
             name,
             description,
-            weight,
-            price,
+            width,
+            height,
             category{
                 id,
                 name
@@ -47,13 +73,39 @@ export const CREATE_PRODUCT = gql`
 `;
 
 export const UPDATE_PRODUCT = gql`
-    mutation UpdateProduct($productId: ID!, $name: String!, $description: String!, $weight: Int!, $price: Int!, $category: ID!){
-        updateProduct(productId: $productId, name: $name, description: $description, weight: $weight, price: $price, category: $category){
+    mutation UpdateProduct(
+        $name: String!, 
+        $description: String!, 
+        $width: Float!, 
+        $height: Float!, 
+        $category: ID!,
+        $flatInstallationFee: Float!,
+        $perFtInstallationFee: Float!,
+        $unitPrice: Float!,
+        $perFtUnitPriceThreeMonths: Float!,
+        $perFtUnitPriceSixMonths: Float!,
+        $perFtUnitPriceNineMonths: Float!,
+        $perFtUnitPriceTwelveMonths: Float!
+    ){
+        updateProduct(
+            name: $name, 
+            description: $description, 
+            width: $width, 
+            height: $height, 
+            category: $category,
+            flatInstallationFee: $flatInstallationFee,
+            perFtInstallationFee: $perFtInstallationFee,
+            unitPrice: $unitPrice,
+            perFtUnitPriceThreeMonths: $perFtUnitPriceThreeMonths,
+            perFtUnitPriceSixMonths: $perFtUnitPriceSixMonths,
+            perFtUnitPriceNineMonths: $perFtUnitPriceNineMonths,
+            perFtUnitPriceTwelveMonths: $perFtUnitPriceTwelveMonths  
+        ){
             id,
             name,
             description,
-            weight,
-            price,
+            width,
+            height,
             category{
                 id,
                 name
@@ -139,8 +191,7 @@ export const CREATE_ORDER = gql`
             email,
             products{
                 id,
-                name,
-                price
+                name
             },
             total
         }

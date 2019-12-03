@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt, GraphQLFloat } = graphql;
 
 const Product = mongoose.model("product");
 
@@ -10,7 +10,6 @@ const ProductType = new GraphQLObjectType({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
         description: { type: GraphQLString },
-        weight: { type: GraphQLInt },
         category: {
             type: require("./category_type"),
             resolve(parentValue) {
@@ -21,7 +20,16 @@ const ProductType = new GraphQLObjectType({
                     });
             }
         },
-        price: { type: GraphQLInt }
+        price: { type: GraphQLFloat },
+        width: { type: GraphQLFloat },
+        height: { type: GraphQLFloat },
+        flatInstallationFee: { type: GraphQLFloat },
+        perFtInstallationFee: { type: GraphQLFloat },
+        unitPrice: { type: GraphQLFloat },
+        perFtUnitPriceThreeMonths: { type: GraphQLFloat },
+        perFtUnitPriceSixMonths: { type: GraphQLFloat },
+        perFtUnitPriceNineMonths: { type: GraphQLFloat },
+        perFtUnitPriceTwelveMonths: { type: GraphQLFloat }
     })
 });
 

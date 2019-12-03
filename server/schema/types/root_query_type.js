@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const graphql = require("graphql");
 const axios = require("axios");
-const { GraphQLObjectType, GraphQLList, GraphQLID, GraphQLNonNull, GraphQLString } = graphql;
+const { GraphQLObjectType, GraphQLList, GraphQLID, GraphQLNonNull, GraphQLString, GraphQLFloat } = graphql;
 const AWSKey = require("../../../config/keys").AWSKey;
 
 const UserType = require("./user_type");
@@ -114,11 +114,23 @@ const RootQueryType = new GraphQLObjectType({
         },
         getProductPrice: {
             type: ProductType,
-            args: { id: { type: GraphQLID }},
-            resolve(_, {id}){
+            args: { 
+                id: { type: GraphQLID }, 
+                totalFeet: { type: GraphQLFloat },
+                startDate: { type: GraphQLString },
+                endDate: { type: GraphQLString }
+            },
+            resolve(_, {id, totalFeet, startDate, endDate}){
+                if(totalFeet <= 0) throw "Invalid footage";
+
                 return Product.findById(id).then(product => {
-                    product.price = product.computePrice();
-                    // console.log(product.computePrice());
+                    // CHANGE
+                    const start = new Date(startDate);
+                    const finish = new Date(endDate); 
+                    const diffTime = finish.getTime() - start.getTime();
+                    const numDays = diffTime / (1000 * 3600 * 24);
+                    if(numDays <= 0) throw "Invalid date range";
+                    product.price = product.computePrice(totalFeet, numDays);
                     return product;
                 });     
             }

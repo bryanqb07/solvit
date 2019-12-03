@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLID, GraphQLList, GraphQLBoolean } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLID, GraphQLList, GraphQLBoolean, GraphQLFloat } = graphql;
 const { GraphQLUpload } = require("graphql-upload");
 const AuthService = require("../services/auth");
 
@@ -56,12 +56,22 @@ const mutation = new GraphQLObjectType({
             args: {
                 name: { type: GraphQLString },
                 description: { type: GraphQLString },
-                weight: { type: GraphQLInt },
+                width: { type: GraphQLFloat },
+                height: { type: GraphQLFloat },
                 price: { type: GraphQLInt },
                 category: { type: GraphQLID },
+                flatInstallationFee: { type: GraphQLFloat },
+                perFtInstallationFee: { type: GraphQLFloat },
+                unitPrice: { type: GraphQLFloat },
+                perFtUnitPriceThreeMonths: { type: GraphQLFloat },
+                perFtUnitPriceSixMonths: { type: GraphQLFloat },
+                perFtUnitPriceNineMonths: { type: GraphQLFloat },
+                perFtUnitPriceTwelveMonths: { type: GraphQLFloat } 
                 // photo: { type: GraphQLUpload }
             },
-            async resolve(_, { name, description, weight, price, category }, ctx) {
+            async resolve(_, { name, description, width, height, price, category, flatInstallationFee,
+                perFtInstallationFee, unitPrice, perFtUnitPriceThreeMonths, perFtUnitPriceSixMonths,
+                perFtUnitPriceNineMonths, perFtUnitPriceTwelveMonths}, ctx) {
                 // const file = await args.file;
                 // const { createReadStream, filename, mimetype } = file;
                 // const fileStream = createReadStream();
@@ -81,7 +91,10 @@ const mutation = new GraphQLObjectType({
                 
                 const validUser = await AuthService.verifyUser({ token: ctx.token, admin: true });
                 if(validUser.loggedIn){
-                    return new Product({ name, description, weight, price, category }).save();
+                    return new Product({
+                        name, description, width, height, price, category, flatInstallationFee,
+                        perFtInstallationFee, unitPrice, perFtUnitPriceThreeMonths, perFtUnitPriceSixMonths,
+                        perFtUnitPriceNineMonths, perFtUnitPriceTwelveMonths }).save();
                 }else{
                     throw new Error("Sorry, you need to be logged-in staff to create a product.");
                 }
@@ -104,20 +117,38 @@ const mutation = new GraphQLObjectType({
         updateProduct: {
             type: ProductType,
             args: { 
-                productId: { type: GraphQLID }, 
                 name: { type: GraphQLString },
                 description: { type: GraphQLString },
-                weight: { type: GraphQLInt },
+                width: { type: GraphQLFloat },
+                height: { type: GraphQLFloat },
                 price: { type: GraphQLInt },
-                category: { type: GraphQLID }},
-            resolve(_, { productId, name, description, weight, price, category } ) {
+                category: { type: GraphQLID },
+                flatInstallationFee: { type: GraphQLFloat },
+                perFtInstallationFee: { type: GraphQLFloat },
+                unitPrice: { type: GraphQLFloat },
+                perFtUnitPriceThreeMonths: { type: GraphQLFloat },
+                perFtUnitPriceSixMonths: { type: GraphQLFloat },
+                perFtUnitPriceNineMonths: { type: GraphQLFloat },
+                perFtUnitPriceTwelveMonths: { type: GraphQLFloat } 
+            },
+            resolve(_, { productId, name, description, width, height, price, category, flatInstallationFee,
+                perFtInstallationFee, unitPrice, perFtUnitPriceThreeMonths, perFtUnitPriceSixMonths,
+                perFtUnitPriceNineMonths, perFtUnitPriceTwelveMonths} ) {
                 const updatedProduct = {};
                 updatedProduct.id = productId;
                 if (name) updatedProduct.name = name;
                 if (description) updatedProduct.description = description;
-                if (weight) updatedProduct.weight = weight;
+                if (width) updatedProduct.width = width;
+                if (height) updatedProduct.height = height;
                 if (price) updatedProduct.price = price;
                 if (category) updatedProduct.category = category;
+                if (flatInstallationFee) updatedProduct.flatInstallationFee = flatInstallationFee;
+                if (perFtInstallationFee) updatedProduct.perFtInstallationFee = perFtInstallationFee;
+                if (unitPrice) updatedProduct.unitPrice = unitPrice;
+                if (perFtUnitPriceThreeMonths) updatedProduct.perFtUnitPriceThreeMonths = perFtUnitPriceThreeMonths;
+                if (perFtUnitPriceSixMonths) updatedProduct.perFtUnitPriceSixMonths = perFtUnitPriceSixMonths;
+                if (perFtUnitPriceNineMonths) updatedProduct.perFtUnitPriceNineMonths = perFtUnitPriceNineMonths;
+                if (perFtUnitPriceTwelveMonths) updatedProduct.perFtUnitPriceTwelveMonths = perFtUnitPriceTwelveMonths;
                 return Product.findByIdAndUpdate(productId, { $set: updatedProduct }, { new: true }, (err, product) => {
                     if(category){
                         return Product.updateProductCategory(product.id, category);

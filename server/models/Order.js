@@ -88,6 +88,25 @@ const OrderSchema = new Schema({
             required: true
         }
     },
+    insured: {
+        type: Boolean,
+        required: true
+    },
+    subtotal: {
+        type: Number,
+        required: true
+    },
+    insuranceCost: {
+        type: Number,
+        required: true
+    },
+    installationFee: {
+        type: Number,
+        required: true
+    },
+    salesTax: {
+        type: Number
+    },
     total: {
         type: Number,
         required: true

@@ -6,8 +6,8 @@ export const FETCH_PRODUCTS = gql`
       id,
       name,
       description,
-      weight,
-      price
+      width,
+      height
     }
   }
 `;
@@ -18,8 +18,8 @@ export const FETCH_PRODUCT = gql`
       id,
       name,
       description,
-      weight,
-      price
+      width,
+      height
     }
   }
 `;
@@ -61,8 +61,7 @@ export const FETCH_CATEGORY = gql`
       products{
         id,
         name,
-        description,
-        price
+        description
       }
     }
   }
@@ -75,8 +74,7 @@ export const FETCH_ORDERS = gql`
       total,
       products{
         id,
-        name,
-        price
+        name
       },
       user{
         name,
@@ -94,7 +92,6 @@ export const FETCH_ORDER = gql`
       products{
         id,
         name,
-        price
       },
       user{
         name,
@@ -111,8 +108,7 @@ export const FETCH_USER_ORDERS = gql`
       total,
       products{
         id,
-        name,
-        price
+        name
       }
     }
   }
@@ -134,12 +130,19 @@ export const FETCH_PRODUCT_AND_CATEGORIES = gql`
       id,
       name,
       description,
-      weight,
-      price,
+      width,
+      height,
       category{
         id,
         name
-      }
+      },
+      flatInstallationFee,
+      perFtInstallationFee,
+      unitPrice,
+      perFtUnitPriceThreeMonths,
+      perFtUnitPriceSixMonths,
+      perFtUnitPriceNineMonths,
+      perFtUnitPriceTwelveMonths
     }
     categories{
       id,
@@ -149,8 +152,8 @@ export const FETCH_PRODUCT_AND_CATEGORIES = gql`
 `;
 
 export const FETCH_PRODUCT_PRICE = gql`
-  query FetchProductPrice($id: ID!){
-    getProductPrice(id: $id){
+  query FetchProductPrice($id: ID!, $totalFeet: Float!, $startDate: String!, $endDate: String!){
+    getProductPrice(id: $id, totalFeet: $totalFeet, startDate: $startDate, endDate: $endDate){
       id,
       name
       price
@@ -164,8 +167,7 @@ export const SEARCH_PRODUCTS = gql`
       id,
       name,
       description,
-      weight,
-      price
+      weight
     }
   }
 `;
