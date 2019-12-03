@@ -143,6 +143,10 @@ textarea{
     font-size: 18px;  
 }
 
+.search:focus{
+  border-radius: 0px;
+}
+
 .hidden{
   display: none;
 }

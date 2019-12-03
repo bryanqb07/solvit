@@ -62,7 +62,7 @@ ProductSchema.statics.updateProductCategory = (productId, categoryId) => {
 };
 
 ProductSchema.methods.computePrice = function(){
-  return 100 * this.price;
+  return this.price;
 };
 
 module.exports = mongoose.model("product", ProductSchema);
