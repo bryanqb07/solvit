@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLID, GraphQLInt, GraphQLList } = graphql;
+const { GraphQLObjectType, GraphQLID, GraphQLInt, GraphQLList, GraphQLString } = graphql;
 
 const Order = mongoose.model("order");
 
@@ -17,6 +17,7 @@ const OrderType = new GraphQLObjectType({
                     .then(order => order.products);
             }
         },
+        email: { type: GraphQLString },
         user: {
             type: require('./user_type'),
             resolve(parentValue){

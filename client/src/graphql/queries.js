@@ -155,3 +155,15 @@ export const FETCH_PRODUCT_PRICE = gql`
     }
   }
 `;
+
+export const SEARCH_PRODUCTS = gql`
+  query SearchProducts($queryString: String!){
+    searchProducts(queryString: $queryString){
+      id,
+      name,
+      description,
+      weight,
+      price
+    }
+  }
+`;

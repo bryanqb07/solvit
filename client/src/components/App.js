@@ -19,6 +19,7 @@ import OrderDetail from "./orders/OrderDetail";
 import CategoryEditContainer from "./categories/CategoryEditContainer";
 import Checkout from "./checkout/Checkout";
 import ConfirmationPage from "./ConfirmationPage";
+import ProductsSearch from "./products/ProductSearch";
 
 const App = () => (
   <div className="w3-content">
@@ -59,6 +60,7 @@ const App = () => (
                 <Route exact path="/orders/:id" component={UserOrders} />
                 <Route exact path="/categories/:id" component={CategoryDetail} />
                 <Route path="/confirmation" component={ConfirmationPage} />
+                <Route path="/search" component={ProductsSearch} />
                 <Route exact path="/" component={ProductsIndex} />
               </Switch>
             </div>

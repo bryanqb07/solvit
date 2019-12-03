@@ -102,6 +102,7 @@ export const CREATE_ORDER = gql`
         $products: [ID]!, 
         $total: Int!, 
         $user: ID,
+        $email: String!,
         $shipping_name: String!,
         $shipping_address1: String!,
         $shipping_address2: String!,
@@ -120,6 +121,7 @@ export const CREATE_ORDER = gql`
             products: $products, 
             total: $total, 
             user: $user,
+            email: $email,
             shipping_name: $shipping_name,
             shipping_address1: $shipping_address1,
             shipping_address2: $shipping_address2,
@@ -134,6 +136,7 @@ export const CREATE_ORDER = gql`
             billing_zipcode: $billing_zipcode
         ){
             id,
+            email,
             products{
                 id,
                 name,

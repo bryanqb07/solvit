@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Query, Mutation } from "react-apollo";
-import { FETCH_CART_ITEMS } from "../../graphql/queries";
+import { Mutation } from "react-apollo";
 import { CREATE_ORDER } from "../../graphql/mutations";
 import { CardElement, injectStripe } from "react-stripe-elements";
 import { withRouter } from "react-router";
@@ -13,7 +12,7 @@ class CheckoutForm extends Component {
             user: this.props.user ? this.props.user : null,
             products: this.props.products ? this.props.products : "",
             total: this.props.total ? this.props.total : null,
-
+            email: "",
             shipping_name: "",
             shipping_address1: "",
             shipping_address2: "",
@@ -82,6 +81,7 @@ class CheckoutForm extends Component {
             variables: {
                 user: this.state.user,
                 products: this.state.products,
+                email: this.state.email,
                 total: parseInt(this.state.total),
                 token: token.id,
                 shipping_name: this.state.shipping_name,
@@ -106,17 +106,14 @@ class CheckoutForm extends Component {
             <Mutation
                 mutation={CREATE_ORDER}
                 onError={err => this.setState({ message: err.message })}
-                // update cache on product creation
-                // update={(cache, data) => this.updateCache(cache, data)}
                 onCompleted={data => {
                     this.setState({
                         message: `New order created successfully`
                     })
-                    const query_params = `id=${data.newOrder.id}`;
 
                     this.props.history.push({
                       pathname: "/confirmation",
-                      search: query_params
+                      search: `id=${data.newOrder.id}`
                     });
                   }}
             >
@@ -132,6 +129,14 @@ class CheckoutForm extends Component {
                               onChange={this.updateShipping("name")}
                               value={this.state.billing_name}
                               placeholder="Name"
+                              type="text"
+                            />
+                            <br />
+                            <label>Email</label>
+                            <input
+                              onChange={this.update("email")}
+                              value={this.state.email}
+                              placeholder="Email"
                               type="text"
                             />
                             <br />

@@ -174,6 +174,7 @@ const mutation = new GraphQLObjectType({
                 total: { type: GraphQLInt },
                 // prices: { type: GraphQLList(GraphQLInt) },
                 user: { type: GraphQLID },
+                email: { type: GraphQLString },
                 shipping_name: { type: GraphQLString },
                 shipping_address1: { type: GraphQLString },
                 shipping_address2: { type: GraphQLString },
@@ -191,12 +192,13 @@ const mutation = new GraphQLObjectType({
             async resolve(_, { 
                 token, products, user, total, shipping_name, shipping_address1, shipping_address2, shipping_city,
                 shipping_state, shipping_zipcode, billing_name, billing_address1, billing_address2, billing_city,
-                billing_state, billing_zipcode
+                billing_state, billing_zipcode, email
             }, ctx) {
                       // validatePrice fn
-                      const order = {
+                      let order = {
                         products,
                         total,
+                        email,
                         paymentInfo: {
                           gateway: "Stripe",
                           token

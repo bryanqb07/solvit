@@ -24,7 +24,7 @@ const ConfirmationPage = (props) => {
                             <div>
                                 <h3>Confirmation Page</h3>
                                 <p>Congratulations on your successful order!</p>
-                                <p>A confirmation email and receipt have been sent to test@mail.com</p>
+                                <p>A confirmation email and receipt have been sent to {order.billingInfo.email}</p>
                                 <p>Confirmation #: {order.id}</p>
                                 <p>Order Total: ${order.total}</p>
                             </div>
