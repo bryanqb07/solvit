@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLID, GraphQLInt, GraphQLList, 
-    GraphQLString, GraphQLBoolean, GraphQL } = graphql;
+const { GraphQLObjectType, GraphQLID, GraphQLFloat, GraphQLList, 
+    GraphQLString, GraphQLBoolean } = graphql;
 
 const Order = mongoose.model("order");
 
@@ -34,11 +34,11 @@ const OrderType = new GraphQLObjectType({
   name: "OrderType",
   fields: () => ({
     id: { type: GraphQLID },
-    subtotal: { type: GraphQLInt },
-    installationFee: { type: GraphQLInt },
+    subtotal: { type: GraphQLFloat },
+    installationFee: { type: GraphQLFloat },
     insured: { type: GraphQLBoolean },
-    insuranceFee: { type: GraphQLInt },
-    total: { type: GraphQLInt },
+    insuranceFee: { type: GraphQLFloat },
+    total: { type: GraphQLFloat },
     products: {
       type: new GraphQLList(require("./product_type")),
       resolve(parentValue) {
@@ -57,7 +57,8 @@ const OrderType = new GraphQLObjectType({
       }
     },
     billingInfo: { type: BillingType },
-    shippingInfo: { type: ShippingType }
+    shippingInfo: { type: ShippingType },
+    date: { type: GraphQLString }
   })
 });
 

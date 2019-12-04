@@ -72,14 +72,25 @@ export const FETCH_ORDERS = gql`
   {
     orders{
       id,
+      email,
+      subtotal,
+      installationFee,
+      insuranceFee,
+      insured,
+      shippingInfo{
+        shippingStatus
+      },
+      billingInfo{
+        name
+      },
+      date,
       total,
       products{
         id,
         name
       },
-      user{
-        name,
-        email
+      billingInfo{
+        name
       }
     }
   }

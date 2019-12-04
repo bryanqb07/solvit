@@ -46,7 +46,7 @@ const Checkout = () => {
                             <div key={cartItem.id}>
                               <CartItem cartItem={cartItem} total={total} />
                               <RemoveItemFromCart id={cartItem.id} />
-                              { insuranceFee > 0 ? (<p> Insurance Fee: ${insuranceFee}</p>) : ""}
+                              {/* { insuranceFee > 0 ? (<p> Insurance Fee: ${insuranceFee}</p>) : ""} */}
                               <hr />
                             </div>
                           ))}

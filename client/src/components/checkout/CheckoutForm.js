@@ -14,8 +14,10 @@ class CheckoutForm extends Component {
             subtotal: this.props.subtotal ? this.props.subtotal : null,
             installationFee: this.props.installationFee ? this.props.installationFee : null, 
             productRentalPeriods: this.props.productRentalPeriods ? this.props.productRentalPeriods : [],
-            insuranceFee: this.props.total * 0.1,
+            // MUST FIX
+            insuranceFee: 0,
             insuranceChecked: true,
+            //
             // salesTax: 0
             total: this.props.total ? this.props.total : null,
             email: "",
@@ -67,7 +69,7 @@ class CheckoutForm extends Component {
             });
         }
     }
-
+    // FIX ME
     toggleInsuranceCheck(e, cache){
       e.preventDefault();
       if(this.state.insuranceChecked){
@@ -83,7 +85,7 @@ class CheckoutForm extends Component {
         //     insuranceFee: 150
         //   }
         // });
-        this.setState({ insuranceChecked: true, insuranceFee: this.state.total * 0.1 });
+        this.setState({ insuranceChecked: true, insuranceFee: 0 });
       }
     }
 

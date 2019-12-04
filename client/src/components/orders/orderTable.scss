@@ -1,0 +1,45 @@
+table {
+    background: #fff;
+    width: 145%;
+    table-layout: fixed;
+    border-radius: 6px;
+    overflow: auto;
+}
+
+thead {
+    background: #1A5DC8;
+    color: #fff;
+}
+
+th {
+    font-size: 12px;
+    font-weight: 200;
+    text-align: left;
+    padding: 1em;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody td {
+    padding: 1.5em 1em;
+    overflow-wrap: break-word;
+}
+
+tbody tr {
+    
+    &.show {
+        display: table-row;
+    }
+    
+    &.hidden {
+        display: none;
+    }
+    
+    &.bg-grey,
+    &:nth-child(odd){
+        background: #f1f1f1;
+    }
+    
+    &:last-child td {
+        border-bottom: none;
+    }
+}
