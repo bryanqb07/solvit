@@ -15,12 +15,16 @@ function ProductDetail(props) {
                 const product = data.product;
 
                 return (
-                    <div>
-                        <img src="testFence.png" alt="product"></img>
-                        <p>Name: {product.name}</p>
-                        <p>Description: {product.description}</p>
-                        <p>Dimensions: {product.width} x {product.height} ft.</p>
-                        <PriceQuote id={product.id}/>
+                    <div className="product-view-container">
+                        <div className="product-view-left">
+                            <img src="testFence.png" alt="product" />
+                        </div>
+                        <div className="product-view-right">
+                            <h3>Name: {product.name}</h3>
+                            <p>Description: {product.description}</p>
+                            <p>Dimensions: {product.width} x {product.height} ft.</p>
+                            <PriceQuote id={product.id} />
+                        </div>
                     </div>
                 )
             }}
