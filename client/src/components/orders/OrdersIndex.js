@@ -6,7 +6,7 @@ import { Query } from "react-apollo";
 const OrdersIndex = (props) => (
     <Query query={FETCH_ORDERS}>
         {({ loading, error, data }) => {
-            if (loading) return <div className="loader">Loading...</div>
+            if (loading) return <div className="loader"></div>
             if (error) return `Error! ${error.message}`;
             const orders = data.orders;
             return(

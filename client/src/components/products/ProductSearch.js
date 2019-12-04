@@ -9,7 +9,7 @@ const ProductsSearch = (props) => {
     return(
         <Query query={SEARCH_PRODUCTS} variables={queryString}>
             {({ loading, error, data }) => {
-                if (loading) return <div className="loader">Loading...</div>
+                if (loading) return <div className="loader"></div>
                 if (error) return `Error! ${error.message}`;
                 const products = data.searchProducts;
                 if(!products) return <div>No products found. Please search again.</div>

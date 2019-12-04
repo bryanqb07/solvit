@@ -58,7 +58,7 @@ const mutation = new GraphQLObjectType({
                 description: { type: GraphQLString },
                 width: { type: GraphQLFloat },
                 height: { type: GraphQLFloat },
-                price: { type: GraphQLInt },
+                // price: { type: GraphQLInt },
                 category: { type: GraphQLID },
                 flatInstallationFee: { type: GraphQLFloat },
                 perFtInstallationFee: { type: GraphQLFloat },
@@ -69,7 +69,7 @@ const mutation = new GraphQLObjectType({
                 perFtUnitPriceTwelveMonths: { type: GraphQLFloat } 
                 // photo: { type: GraphQLUpload }
             },
-            async resolve(_, { name, description, width, height, price, category, flatInstallationFee,
+            async resolve(_, { name, description, width, height, category, flatInstallationFee,
                 perFtInstallationFee, unitPrice, perFtUnitPriceThreeMonths, perFtUnitPriceSixMonths,
                 perFtUnitPriceNineMonths, perFtUnitPriceTwelveMonths}, ctx) {
                 // const file = await args.file;
@@ -88,11 +88,13 @@ const mutation = new GraphQLObjectType({
                 // console.log(result);
 
                 // return file;
+
+                console.log(category);
                 
                 const validUser = await AuthService.verifyUser({ token: ctx.token, admin: true });
                 if(validUser.loggedIn){
                     return new Product({
-                        name, description, width, height, price, category, flatInstallationFee,
+                        name, description, width, height, category, flatInstallationFee,
                         perFtInstallationFee, unitPrice, perFtUnitPriceThreeMonths, perFtUnitPriceSixMonths,
                         perFtUnitPriceNineMonths, perFtUnitPriceTwelveMonths }).save();
                 }else{
@@ -151,11 +153,6 @@ const mutation = new GraphQLObjectType({
                 if (perFtUnitPriceNineMonths) updatedProduct.perFtUnitPriceNineMonths = perFtUnitPriceNineMonths;
                 if (perFtUnitPriceTwelveMonths) updatedProduct.perFtUnitPriceTwelveMonths = perFtUnitPriceTwelveMonths;
                 return Product.findByIdAndUpdate(productId, { $set: updatedProduct }, { new: true }, (err, product) => {
-                    if(err){
-                        console.log(err);
-                        return err;
-                    }
-                    console.log(product);
                     if(category){
                         return Product.updateProductCategory(product.id, category);
                     }

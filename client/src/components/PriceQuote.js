@@ -60,7 +60,7 @@ class PriceQuote extends Component{
                 {cache => (
                     <Query query={FETCH_PRODUCT_PRICE} variables={priceParams}>
                         {({ loading, error, data }) => {
-                            if (loading) return <div className="loader">Loading...</div>
+                            if (loading) return <div className="loader"></div>
                             if (error) return `Error! ${error.message}`;
                             const { id, name, price, installationFee } = data.getProductPrice
                             const total = price + installationFee

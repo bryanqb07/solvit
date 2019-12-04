@@ -14,7 +14,7 @@ const CategoryType = new GraphQLObjectType({
             resolve(parentValue){
                 return Category.findById(parentValue.id)
                     .populate("products")
-                    .then(category => category.products)
+                    .then(category => category.products);
             }
         } 
     })

@@ -9,7 +9,7 @@ const ConfirmationPage = (props) => {
             {cache => (
             <Query query={FETCH_ORDER} variables={orderId} >
                 {({ loading, error, data }) => {
-                    if (loading) return <div className="loader">Loading...</div>
+                    if (loading) return <div className="loader"></div>
                     if (error) return `Error! ${error.message}`;
                     // console.log(data);
                     const order = data.order;

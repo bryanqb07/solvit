@@ -6,7 +6,7 @@ import ProductContainer from "./ProductContainer";
 const ProductsIndex = (props) => (
   <Query query={FETCH_PRODUCTS}>
     {({ loading, error, data }) => {
-      if (loading) return <div className="loader">Loading...</div>
+      if (loading) return <div className="loader"></div>
       if (error) return `Error! ${error.message}`;
 
       return <ProductContainer products={data.products} nonStaff={props.match.path === "/"} />

@@ -5,7 +5,7 @@ import { Query } from "react-apollo";
 const UserOrders = (props) => (
     <Query query={FETCH_USER_ORDERS} variables={{user: props.match.params.id }}>
         {({ loading, error, data }) => {
-            if (loading) return <div className="loader">Loading...</div>
+            if (loading) return <div className="loader"></div>
             if (error) return `Error! ${error.message}`;
             const orders = data.userOrders;
             if(orders.length > 0){
