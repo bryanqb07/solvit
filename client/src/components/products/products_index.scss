@@ -60,7 +60,9 @@ $product-box-shadow: 0px 0px 0px 1px $light-gray;
 		float: left;
         width: 33.33333%;
         text-align: center;
-        // Delete when done
+	}
+	
+	&__product-wrapper:hover {
         border: 1px solid lightgray; 
 	}
 	

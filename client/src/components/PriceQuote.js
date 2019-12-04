@@ -20,7 +20,7 @@ class PriceQuote extends Component{
     }
 
     render(){
-        console.log(this.state);
+        // console.log(this.state);
         if(!this.state.clicked){
             return(
                 <div>

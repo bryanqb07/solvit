@@ -10,7 +10,7 @@ const OrdersIndex = (props) => (
             if (loading) return <div className="loader"></div>
             if (error) return `Error! ${error.message}`;
             const orders = data.orders;
-            console.log(orders);
+            // console.log(orders);
             return (
               <div>
                 <table>
