@@ -34,7 +34,8 @@ class CheckoutForm extends Component {
             billing_zipcode: "",
 
             message: "",
-            checked: true // billing info = shipping info
+            checked: true, // billing info = shipping info
+            submitDisabled: false
         };
         this.toggleCheck = this.toggleCheck.bind(this);
         this.toggleInsuranceCheck = this.toggleInsuranceCheck.bind(this);
@@ -129,9 +130,9 @@ class CheckoutForm extends Component {
                 billing_city: this.state.billing_city,
                 billing_state: this.state.billing_state,
                 billing_zipcode: this.state.billing_zipcode,
-
             }
         });
+      this.setState({ submitDisabled: true });
     }
 
     render() {
@@ -141,7 +142,7 @@ class CheckoutForm extends Component {
             {cache => (
               <Mutation
                 mutation={CREATE_ORDER}
-                onError={err => this.setState({ message: err.message })}
+                onError={err => this.setState({ message: err.message, submitDisabled: false })}
                 onCompleted={data => {
                   this.setState({
                     message: `New order created successfully`
@@ -302,7 +303,7 @@ class CheckoutForm extends Component {
                         onChange={e => this.toggleInsuranceCheck(e, cache)}
                       />
                       <br />
-                      <button onClick={e => this.handleSubmit(e, newOrder)}>
+                      <button disabled={this.state.submitDisabled} onClick={e => this.handleSubmit(e, newOrder)}>
                         Complete Purchase
                         </button>
                       <p>{this.state.message}</p>
