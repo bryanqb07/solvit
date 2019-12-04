@@ -2,7 +2,7 @@ import React from "react";
 import { FETCH_CART_ITEMS } from "../../graphql/queries";
 import { Query, ApolloConsumer } from "react-apollo";
 
-const AddItemToCart = ({id, price, name}) => {
+const AddItemToCart = ({id, price, name, startDate, endDate, total, installationFee}) => {
     return (
         <ApolloConsumer>
             {cache => (
@@ -37,7 +37,15 @@ const AddItemToCart = ({id, price, name}) => {
                                 // create our object with the id and cost from our props and add it to
                                 // the array of cart items
                                 const data = {
-                                    cart: [...cart, { id, price, name } ]
+                                    cart: [...cart, {
+                                        name,
+                                        id,
+                                        startDate,
+                                        endDate,
+                                        subtotal: price,
+                                        installationFee,
+                                        total
+                                    }]
                                 } 
                                 // console.log(data);
                                 // write to our cache with our new array of cart items!

@@ -13,9 +13,14 @@ const Checkout = () => {
                 if (loading) return <div className="loader">Loading...</div>
                 if (error) return `Error! ${error.message}`;
                 if (data && data.cart && data.cart.length > 0) {
+                    let installationFee = data.cart.map(item => item.installationFee).reduce((acc, cv) => acc + cv);
+                    let subtotal = data.cart.map(item => item.subtotal).reduce((acc, cv) => acc + cv);
                     let total = data.cart.map(item => item.total).reduce((acc, cv) => acc + cv);
                     let productIdList = data.cart.map(item => item.id);
+                    let insuranceFee = data.insuranceFee;
+                    let productRentalPeriods = data.cart.map(item => `${item.startDate},${item.endDate}`);
                     const user = data.userId
+                    // console.log(data);
                     return (
                       <div className="flex space-evenly">
                         <div>
@@ -25,7 +30,11 @@ const Checkout = () => {
                                 <CheckoutForm
                                   user={user}
                                   products={productIdList}
+                                  subtotal={subtotal}
                                   total={total}
+                                  installationFee={installationFee}
+                                  insuranceFee={insuranceFee}
+                                  productRentalPeriods={productRentalPeriods}
                                 />
                               </Elements>
                             </div>
@@ -37,6 +46,8 @@ const Checkout = () => {
                             <div key={cartItem.id}>
                               <CartItem cartItem={cartItem} total={total} />
                               <RemoveItemFromCart id={cartItem.id} />
+                              { insuranceFee > 0 ? (<p> Insurance Fee: ${insuranceFee}</p>) : ""}
+                              <hr />
                             </div>
                           ))}
                           <p>Total: ${total}</p>

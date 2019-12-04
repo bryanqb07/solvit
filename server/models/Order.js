@@ -103,7 +103,7 @@ const OrderSchema = new Schema({
         type: Number,
         required: true
     },
-    insuranceCost: {
+    insuranceFee: {
         type: Number,
         required: true
     },
@@ -111,9 +111,9 @@ const OrderSchema = new Schema({
         type: Number,
         required: true
     },
-    salesTax: {
-        type: Number
-    },
+    // salesTax: {
+    //     type: Number
+    // },
     total: {
         type: Number,
         required: true

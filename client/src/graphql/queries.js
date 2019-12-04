@@ -40,7 +40,8 @@ export const FETCH_CART_ITEMS = gql`
 export const FETCH_CART_ITEMS_AND_USER = gql`
   query FetchCartItems{
     cart @client,
-    userId @client
+    userId @client,
+    insuranceFee @client
   }
 `;
 
@@ -95,8 +96,8 @@ export const FETCH_ORDER = gql`
       },
       user{
         name,
-        email
       }
+      email
     }
   }
 `;

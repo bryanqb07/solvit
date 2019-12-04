@@ -100,7 +100,7 @@ class CreateProduct extends Component {
     // }
 
     render(){
-        console.log(this.state);
+        // console.log(this.state);
         return(
             <Mutation
                 mutation={this.props.update ? UPDATE_PRODUCT : CREATE_PRODUCT}

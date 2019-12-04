@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Mutation } from "react-apollo";
+import { Mutation, ApolloConsumer } from "react-apollo";
 import { CREATE_ORDER } from "../../graphql/mutations";
 import { CardElement, injectStripe } from "react-stripe-elements";
 import { withRouter } from "react-router";
@@ -11,6 +11,12 @@ class CheckoutForm extends Component {
         this.state = {
             user: this.props.user ? this.props.user : null,
             products: this.props.products ? this.props.products : "",
+            subtotal: this.props.subtotal ? this.props.subtotal : null,
+            installationFee: this.props.installationFee ? this.props.installationFee : null, 
+            productRentalPeriods: this.props.productRentalPeriods ? this.props.productRentalPeriods : [],
+            insuranceFee: this.props.total * 0.1,
+            insuranceChecked: true,
+            // salesTax: 0
             total: this.props.total ? this.props.total : null,
             email: "",
             shipping_name: "",
@@ -31,6 +37,7 @@ class CheckoutForm extends Component {
             checked: true // billing info = shipping info
         };
         this.toggleCheck = this.toggleCheck.bind(this);
+        this.toggleInsuranceCheck = this.toggleInsuranceCheck.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.stateList = ["--Select State--", "Alabama", "Arkansas", "Florida", "Georgia", "Kentucky", "Louisiana", "Mississippi", 
             "North Carolina", "South Carolina", "Tennessee"];
@@ -60,6 +67,25 @@ class CheckoutForm extends Component {
         }
     }
 
+    toggleInsuranceCheck(e, cache){
+      e.preventDefault();
+      if(this.state.insuranceChecked){
+        // cache.writeData({
+        //   data: {
+        //     insuranceFee: 0
+        //   }
+        // });
+        this.setState({ insuranceChecked: false, insuranceFee: 0});
+      }else{
+        // cache.writeData({
+        //   data: {
+        //     insuranceFee: 150
+        //   }
+        // });
+        this.setState({ insuranceChecked: true, insuranceFee: this.state.total * 0.1 });
+      }
+    }
+
     updateShipping(field) {
         return e => {
             if(this.state.checked){
@@ -82,8 +108,14 @@ class CheckoutForm extends Component {
                 user: this.state.user,
                 products: this.state.products,
                 email: this.state.email,
-                total: parseInt(this.state.total),
+                productRentalPeriods: this.state.productRentalPeriods,
+                subtotal: parseFloat(this.state.subtotal),
+                installationFee: parseFloat(this.state.installationFee),
+                insured: this.state.insuranceChecked,
+                insuranceFee: parseFloat(this.state.insuranceFee),
+                total: parseFloat(this.state.total),
                 token: token.id,
+
                 shipping_name: this.state.shipping_name,
                 shipping_address1: this.state.shipping_address1,
                 shipping_address2: this.state.shipping_address2,
@@ -97,110 +129,113 @@ class CheckoutForm extends Component {
                 billing_city: this.state.billing_city,
                 billing_state: this.state.billing_state,
                 billing_zipcode: this.state.billing_zipcode,
+
             }
         });
     }
 
     render() {
-        return (
-            <Mutation
+        console.log(this.state);
+        return(
+          <ApolloConsumer>
+            {cache => (
+              <Mutation
                 mutation={CREATE_ORDER}
                 onError={err => this.setState({ message: err.message })}
                 onCompleted={data => {
-                    this.setState({
-                        message: `New order created successfully`
-                    })
+                  this.setState({
+                    message: `New order created successfully`
+                  })
 
-                    this.props.history.push({
-                      pathname: "/confirmation",
-                      search: `id=${data.newOrder.id}`
-                    });
-                  }}
-            >
-                {(newOrder, { data }) => 
-                {
-                    return (
-                      <div>
-                        <div className="checkout">
-                          <h3>Billing Information</h3>
-                          <form>
-                            <label>Name</label>
-                            <input
-                              onChange={this.updateShipping("name")}
-                              value={this.state.billing_name}
-                              placeholder="Name"
-                              type="text"
-                            />
-                            <br />
-                            <label>Email</label>
-                            <input
-                              onChange={this.update("email")}
-                              value={this.state.email}
-                              placeholder="Email"
-                              type="text"
-                            />
-                            <br />
-                            <label>Credit Card Details</label>
-                            <CardElement />
-                            <br />
-                            <label>Address Line 1</label>
-                            <input
-                              onChange={this.updateShipping("address1")}
-                              value={this.state.billing_address1}
-                              placeholder="Address Line 1"
-                              type="text"
-                            />
-                            <br />
-                            <label>Address Line 2</label>
-                            <input
-                              onChange={this.updateShipping("address2")}
-                              value={this.state.billing_address2}
-                              placeholder="Address Line 2"
-                              type="text"
-                            />
-                            <br />
-                            <label>City</label>
-                            <input
-                              onChange={this.updateShipping("city")}
-                              value={this.state.billing_city}
-                              placeholder="City"
-                              type="text"
-                            />
-                            <br />
-                            <label>State</label>
-                            <select
-                              onChange={this.updateShipping("state")}
-                              value={this.state.billing_state}
-                              placeholder="State"
-                              type="text"
-                            >
-                              {this.stateList.map(state => (
-                                <option value={state} key={state}>
-                                  {state}
-                                </option>
-                              ))}
-                            </select>
-                            <br />
-                            <label>Zip Code</label>
-                            <input
-                              onChange={this.updateShipping("zipcode")}
-                              value={this.state.billing_zipcode}
-                              placeholder="Zip Code"
-                              type="text"
-                            />
-                          </form>
-                        </div>
-                        <br />
-                        <label>Shipping Info Matches Billing Info</label>
-                        <input
-                          type="checkbox"
-                          checked={this.state.checked}
-                          onChange={this.toggleCheck}
-                        />
-                        <br />
-                        {this.state.checked ? (
-                          ""
-                        ) : (
+                  this.props.history.push({
+                    pathname: "/confirmation",
+                    search: `id=${data.newOrder.id}`
+                  });
+                }}
+              >
+                {(newOrder, { data }) => {
+                  return (
+                    <div>
+                      <div className="checkout">
+                        <h3>Billing Information</h3>
+                        <form>
+                          <label>Name</label>
+                          <input
+                            onChange={this.updateShipping("name")}
+                            value={this.state.billing_name}
+                            placeholder="Name"
+                            type="text"
+                          />
+                          <br />
+                          <label>Email</label>
+                          <input
+                            onChange={this.update("email")}
+                            value={this.state.email}
+                            placeholder="Email"
+                            type="text"
+                          />
+                          <br />
+                          <label>Credit Card Details</label>
+                          <CardElement />
+                          <br />
+                          <label>Address Line 1</label>
+                          <input
+                            onChange={this.updateShipping("address1")}
+                            value={this.state.billing_address1}
+                            placeholder="Address Line 1"
+                            type="text"
+                          />
+                          <br />
+                          <label>Address Line 2</label>
+                          <input
+                            onChange={this.updateShipping("address2")}
+                            value={this.state.billing_address2}
+                            placeholder="Address Line 2"
+                            type="text"
+                          />
+                          <br />
+                          <label>City</label>
+                          <input
+                            onChange={this.updateShipping("city")}
+                            value={this.state.billing_city}
+                            placeholder="City"
+                            type="text"
+                          />
+                          <br />
+                          <label>State</label>
+                          <select
+                            onChange={this.updateShipping("state")}
+                            value={this.state.billing_state}
+                            placeholder="State"
+                            type="text"
+                          >
+                            {this.stateList.map(state => (
+                              <option value={state} key={state}>
+                                {state}
+                              </option>
+                            ))}
+                          </select>
+                          <br />
+                          <label>Zip Code</label>
+                          <input
+                            onChange={this.updateShipping("zipcode")}
+                            value={this.state.billing_zipcode}
+                            placeholder="Zip Code"
+                            type="text"
+                          />
+                        </form>
+                      </div>
+                      <br />
+                      <label>Shipping Info Matches Billing Info</label>
+                      <input
+                        type="checkbox"
+                        checked={this.state.checked}
+                        onChange={this.toggleCheck}
+                      />
+                      <br />
+                      {this.state.checked ? (
+                        ""
+                      ) : (
                           <div>
                             <h3>Shipping Information</h3>
                             <form>
@@ -260,17 +295,26 @@ class CheckoutForm extends Component {
                             </form>
                           </div>
                         )}
-                        <br />
-                        <button onClick={e => this.handleSubmit(e, newOrder)}>
-                          Complete Purchase
+                      <label>Yes, I would like to insure my order </label>
+                      <input
+                        type="checkbox"
+                        checked={this.state.insuranceChecked}
+                        onChange={e => this.toggleInsuranceCheck(e, cache)}
+                      />
+                      <br />
+                      <button onClick={e => this.handleSubmit(e, newOrder)}>
+                        Complete Purchase
                         </button>
-                        <p>{this.state.message}</p>
-                      </div>
-                    );
+                      <p>{this.state.message}</p>
+                    </div>
+                  );
                 }}
-            </Mutation>
+              </Mutation>
+            )}
+          </ApolloConsumer>
         )
     }
+    
 }
 
 export default withRouter(injectStripe(CheckoutForm));

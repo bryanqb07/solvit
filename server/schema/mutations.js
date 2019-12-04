@@ -202,7 +202,12 @@ const mutation = new GraphQLObjectType({
             args: {
                 token: { type: GraphQLString },
                 products: { type: GraphQLList(GraphQLID) },
-                total: { type: GraphQLInt },
+                subtotal: { type: GraphQLFloat },
+                installationFee: { type: GraphQLFloat },
+                insured: { type: GraphQLBoolean },
+                insuranceFee: { type: GraphQLFloat },
+                total: { type: GraphQLFloat },
+                productRentalPeriods: {type: GraphQLList(GraphQLString) },
                 // prices: { type: GraphQLList(GraphQLInt) },
                 user: { type: GraphQLID },
                 email: { type: GraphQLString },
@@ -217,19 +222,28 @@ const mutation = new GraphQLObjectType({
                 billing_address2: { type: GraphQLString },
                 billing_city: { type: GraphQLString },
                 billing_state: { type: GraphQLString },
-                billing_zipcode: { type: GraphQLString }
-
+                billing_zipcode: { type: GraphQLString },
             },
             async resolve(_, { 
                 token, products, user, total, shipping_name, shipping_address1, shipping_address2, shipping_city,
                 shipping_state, shipping_zipcode, billing_name, billing_address1, billing_address2, billing_city,
-                billing_state, billing_zipcode, email
+                billing_state, billing_zipcode, email, productRentalPeriods, subtotal, installationFee, insured,
+                insuranceFee
             }, ctx) {
+                const productDateList = productRentalPeriods.map(item => {
+                    const splitItem = item.split(",");
+                    return { startDate: splitItem[0], endDate: splitItem[1] };
+                });
                       // validatePrice fn
                       let order = {
                         products,
+                        subtotal,
+                        installationFee,
+                        insured,
+                        insuranceFee,
                         total,
                         email,
+                        productRentalPeriods: productDateList,
                         paymentInfo: {
                           gateway: "Stripe",
                           token

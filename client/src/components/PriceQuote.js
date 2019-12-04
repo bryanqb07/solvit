@@ -69,28 +69,30 @@ class PriceQuote extends Component{
                                 <p>Subtotal: ${price}</p>
                                 <p>Installation fee: ${installationFee}</p>
                                 <p>Total: ${total}</p>
-                                <AddItemToCart price={price} id={id} name={name} />
-                                    <button onClick={e => {
-                                        e.preventDefault();
-                                        // read from the cache
-                                        const { cart } = cache.readQuery({
-                                            query: FETCH_CART_ITEMS
-                                        });
-                                        // create our object with the id and cost from our props and add it to
-                                        // the array of cart items
-                                        const data = {
-                                            cart: [...cart, {
-                                                name, 
-                                                id, 
-                                                startDate: this.state.startDate,
-                                                endDate: this.state.endDate,
-                                                subtotal: price, 
-                                                installationFee, 
-                                                total }]
-                                        }
-                                        cache.writeQuery({ query: FETCH_CART_ITEMS, data })
-                                        this.props.history.push("/checkout");
-                                    }}>
+                                <AddItemToCart 
+                                    price={price} id={id} name={name} installationFee={installationFee} 
+                                    startDate={this.startDate} endDate={this.endDate} total={total}/>
+                                <button onClick={e => {
+                                    e.preventDefault();
+                                    // read from the cache
+                                    const { cart } = cache.readQuery({
+                                        query: FETCH_CART_ITEMS
+                                    });
+                                    // create our object with the id and cost from our props and add it to
+                                    // the array of cart items
+                                    const data = {
+                                        cart: [...cart, {
+                                            name, 
+                                            id, 
+                                            startDate: this.state.startDate,
+                                            endDate: this.state.endDate,
+                                            subtotal: price, 
+                                            installationFee, 
+                                            total }]
+                                    }
+                                    cache.writeQuery({ query: FETCH_CART_ITEMS, data })
+                                    this.props.history.push("/checkout");
+                                }}>
                                     Checkout
                                 </button>
                             </div>

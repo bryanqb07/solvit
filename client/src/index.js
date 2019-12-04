@@ -65,7 +65,8 @@ if(token){
                     isLoggedIn: data.verifyUser.loggedIn,
                     isStaff: data.verifyUser.isStaff,
                     cart: [],
-                    userId: data.verifyUser.id
+                    userId: data.verifyUser.id,
+                    insuranceFee: 150
                 }
             });
         });
@@ -75,7 +76,8 @@ if(token){
             isLoggedIn: false,
             isStaff: false,
             cart: [],
-            userId: null
+            userId: null,
+            insuranceFee: 150
         }
     });
 }
