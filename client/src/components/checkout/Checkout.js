@@ -5,6 +5,7 @@ import { Elements, StripeProvider } from "react-stripe-elements";
 import { Query } from "react-apollo";
 import CartItem from "../cart/CartItem";
 import RemoveItemFromCart from "../RemoveFromCart";
+import { STRIPE_API_KEY } from "../../../../config/keys";
 
 const Checkout = () => {
     return(
@@ -24,7 +25,7 @@ const Checkout = () => {
                     return (
                       <div className="flex space-evenly">
                         <div>
-                          <StripeProvider apiKey="pk_test_W1knFGWMPCttW9lRpPYvYOhi00YbWlaJ32">
+                          <StripeProvider apiKey={STRIPE_API_KEY}>
                             <div className="example">
                               <Elements>
                                 <CheckoutForm
