@@ -74,6 +74,7 @@ export const CREATE_PRODUCT = gql`
 
 export const UPDATE_PRODUCT = gql`
     mutation UpdateProduct(
+        $productId: ID!,
         $name: String!, 
         $description: String!, 
         $width: Float!, 
@@ -88,6 +89,7 @@ export const UPDATE_PRODUCT = gql`
         $perFtUnitPriceTwelveMonths: Float!
     ){
         updateProduct(
+            productId: $productId,
             name: $name, 
             description: $description, 
             width: $width, 

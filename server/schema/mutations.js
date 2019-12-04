@@ -117,6 +117,7 @@ const mutation = new GraphQLObjectType({
         updateProduct: {
             type: ProductType,
             args: { 
+                productId: { type: GraphQLID },
                 name: { type: GraphQLString },
                 description: { type: GraphQLString },
                 width: { type: GraphQLFloat },
@@ -150,6 +151,11 @@ const mutation = new GraphQLObjectType({
                 if (perFtUnitPriceNineMonths) updatedProduct.perFtUnitPriceNineMonths = perFtUnitPriceNineMonths;
                 if (perFtUnitPriceTwelveMonths) updatedProduct.perFtUnitPriceTwelveMonths = perFtUnitPriceTwelveMonths;
                 return Product.findByIdAndUpdate(productId, { $set: updatedProduct }, { new: true }, (err, product) => {
+                    if(err){
+                        console.log(err);
+                        return err;
+                    }
+                    console.log(product);
                     if(category){
                         return Product.updateProductCategory(product.id, category);
                     }

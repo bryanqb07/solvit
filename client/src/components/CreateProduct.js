@@ -58,6 +58,7 @@ class CreateProduct extends Component {
         if(this.props.update){
             productFn({
                 variables: {
+                    productId: this.state.productId,
                     name: this.state.name,
                     description: this.state.description,
                     width: parseFloat(this.state.width),
@@ -100,7 +101,7 @@ class CreateProduct extends Component {
     // }
 
     render(){
-        // console.log(this.state);
+        console.log(this.state);
         return(
             <Mutation
                 mutation={this.props.update ? UPDATE_PRODUCT : CREATE_PRODUCT}
