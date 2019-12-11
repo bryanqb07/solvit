@@ -91,7 +91,8 @@ class CheckoutForm extends Component {
     async handleSubmit(e, newOrder) {
         e.preventDefault();
         let {token} = await this.props.stripe.createToken({name: "Name"}); 
-        const salesTax = this.state.shipping_state === "Mississippi" ? this.salesTax * this.props.subtotal : 0;
+        const salesTax = this.state.shipping_state === "Mississippi" ? Math.round(this.salesTax * this.props.subtotal) / 100 : 0;
+        const total = (this.props.subtotal + this.props.installationFee + this.state.insuranceFee).toFixed(2);
         newOrder({
             variables: {
                 user: this.props.user,
@@ -102,7 +103,7 @@ class CheckoutForm extends Component {
                 subtotal: parseFloat(this.props.subtotal),
                 installationFee: parseFloat(this.props.installationFee),
                 insured: this.state.insuranceChecked,
-                insuranceFee: parseFloat(this.state.insuranceFee),
+                insuranceFee: parseFloat(Math.round(this.state.insuranceFee * 100) / 100),
                 total: parseFloat(this.props.subtotal + this.props.installationFee + this.state.insuranceFee + salesTax),
                 token: token.id,
 
@@ -302,10 +303,11 @@ class CheckoutForm extends Component {
                         <p>{this.state.message}</p>
                       </div>
                       <CheckoutSummary
-                        insuranceFee={this.state.insuranceFee}
+                        insuranceFee={ this.state.insuranceFee }
                         subtotal={this.props.subtotal + this.props.installationFee}
                         cartItems={this.props.cartItems} 
-                        salesTax={this.state.shipping_state === "Mississippi" ? this.salesTax * this.props.subtotal : 0} />
+                        salesTax={this.state.shipping_state === "Mississippi" ? this.salesTax * this.props.subtotal  : 0} 
+                      />
                     </div>
                   );
                 }}

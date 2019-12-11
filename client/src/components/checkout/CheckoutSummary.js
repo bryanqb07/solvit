@@ -9,12 +9,12 @@ const CheckoutSummary = ({ cartItems, subtotal, insuranceFee, salesTax }) => (
       <div key={cartItem.id}>
         <CartItem cartItem={cartItem} />
         <RemoveItemFromCart id={cartItem.id} />
-        { insuranceFee > 0 ? <p> Insurance Fee: ${insuranceFee}</p> : ""}
-        { salesTax > 0 ? <p> Sales Tax (MS orders only): ${salesTax}</p> : ""}
+        { insuranceFee > 0 ? <p> Insurance Fee: ${insuranceFee.toFixed(2)}</p> : ""}
+        { salesTax > 0 ? <p> Sales Tax (MS orders only): ${salesTax.toFixed(2)}</p> : ""}
         <hr />
       </div>
     ))}
-    <p>Total: ${subtotal + insuranceFee + salesTax}</p>
+    <p>Total: ${(subtotal + insuranceFee + salesTax).toFixed(2)}</p>
   </div>
 );
 
