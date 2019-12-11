@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLID, GraphQLList, GraphQLBoolean, GraphQLFloat } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLInt, 
+        GraphQLID, GraphQLList, GraphQLBoolean, GraphQLFloat } = graphql;
 const { GraphQLUpload } = require("graphql-upload");
 const AuthService = require("../services/auth");
 
@@ -106,14 +107,22 @@ const mutation = new GraphQLObjectType({
 
                 // return file;
 
-                console.log(category);
-                
                 const validUser = await AuthService.verifyUser({ token: ctx.token, admin: true });
                 if(validUser.loggedIn){
-                    return new Product({
+                    const product = await new Product({
                         name, description, width, height, category, flatInstallationFee,
                         perFtInstallationFee, unitPrice, perFtUnitPriceThreeMonths, perFtUnitPriceSixMonths,
-                        perFtUnitPriceNineMonths, perFtUnitPriceTwelveMonths }).save();
+                        perFtUnitPriceNineMonths, perFtUnitPriceTwelveMonths });
+                    
+                    const updatedCategory = await Category.findByIdAndUpdate(category, {
+                      $push: { products: product.id }
+                    });
+                    if(updatedCategory){
+                        return product.save();
+                    }else{
+                        throw new Error("Error updating product category.");
+                    }
+
                 }else{
                     throw new Error("Sorry, you need to be logged-in staff to create a product.");
                 }
