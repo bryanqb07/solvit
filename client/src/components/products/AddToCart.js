@@ -44,7 +44,8 @@ const AddItemToCart = ({id, price, name, startDate, endDate, total, installation
                                         endDate,
                                         subtotal: price,
                                         installationFee,
-                                        total
+                                        total,
+                                        totalFootage: this.state.totalFeet
                                     }]
                                 } 
                                 // console.log(data);

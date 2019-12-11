@@ -16,6 +16,7 @@ const Checkout = () => {
                     let total = data.cart.map(item => item.total).reduce((acc, cv) => acc + cv);
                     let productIdList = data.cart.map(item => item.id);
                     let productRentalPeriods = data.cart.map(item => `${item.startDate},${item.endDate}`);
+                    let totalFootage = data.cart.map(item => item.totalFootage).reduce((acc, cv) => acc + cv);
                     const user = data.userId
                     // console.log(data);
                     return (
@@ -30,6 +31,7 @@ const Checkout = () => {
                                   total={total}
                                   installationFee={installationFee}
                                   productRentalPeriods={productRentalPeriods}
+                                  totalFootage={totalFootage}
                                   cartItems={data.cart}
                                 />
                               </Elements>

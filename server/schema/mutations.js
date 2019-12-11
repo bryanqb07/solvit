@@ -235,7 +235,9 @@ const mutation = new GraphQLObjectType({
                 installationFee: { type: GraphQLFloat },
                 insured: { type: GraphQLBoolean },
                 insuranceFee: { type: GraphQLFloat },
+                salesTax: { type: GraphQLFloat },
                 total: { type: GraphQLFloat },
+                totalFootage: { type: GraphQLInt },
                 productRentalPeriods: {type: GraphQLList(GraphQLString) },
                 // prices: { type: GraphQLList(GraphQLInt) },
                 user: { type: GraphQLID },
@@ -257,7 +259,7 @@ const mutation = new GraphQLObjectType({
                 token, products, user, total, shipping_name, shipping_address1, shipping_address2, shipping_city,
                 shipping_state, shipping_zipcode, billing_name, billing_address1, billing_address2, billing_city,
                 billing_state, billing_zipcode, email, productRentalPeriods, subtotal, installationFee, insured,
-                insuranceFee
+                insuranceFee, salesTax, totalFootage
             }, ctx) {
                 const productDateList = productRentalPeriods.map(item => {
                     const splitItem = item.split(",");
@@ -270,6 +272,8 @@ const mutation = new GraphQLObjectType({
                         installationFee,
                         insured,
                         insuranceFee,
+                        salesTax,
+                        totalFootage,
                         total,
                         email,
                         productRentalPeriods: productDateList,
@@ -295,7 +299,7 @@ const mutation = new GraphQLObjectType({
                         }
                       };
                       if (user) order.user = user;
-                      console.log(order);
+                    //   console.log(order);
 
                       // stripe validation
                       try {

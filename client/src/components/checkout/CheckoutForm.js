@@ -11,14 +11,8 @@ class CheckoutForm extends Component {
         this.insuranceRate = 0.15;
         this.salesTax = 0.07;
         this.state = {
-            user: this.props.user ? this.props.user : null,
-            products: this.props.products ? this.props.products : "",
-            subtotal: this.props.subtotal ? this.props.subtotal : null,
-            installationFee: this.props.installationFee ? this.props.installationFee : null, 
-            productRentalPeriods: this.props.productRentalPeriods ? this.props.productRentalPeriods : [],
             insuranceFee: this.props.subtotal ? this.props.subtotal * this.insuranceRate : 0,        
             insuranceChecked: true,
-            salesTax: 0,
             email: "",
             shipping_name: "",
             shipping_address1: "",
@@ -75,7 +69,7 @@ class CheckoutForm extends Component {
       }else{
         this.setState({
           insuranceChecked: true,
-          insuranceFee: this.insuranceRate * this.state.subtotal
+          insuranceFee: this.insuranceRate * this.props.subtotal
         });
       }
     }
@@ -97,17 +91,19 @@ class CheckoutForm extends Component {
     async handleSubmit(e, newOrder) {
         e.preventDefault();
         let {token} = await this.props.stripe.createToken({name: "Name"}); 
+        const salesTax = this.state.shipping_state === "Mississippi" ? this.salesTax * this.props.subtotal : 0;
         newOrder({
             variables: {
-                user: this.state.user,
-                products: this.state.products,
+                user: this.props.user,
+                products: this.props.productIdList,
                 email: this.state.email,
-                productRentalPeriods: this.state.productRentalPeriods,
-                subtotal: parseFloat(this.state.subtotal),
-                installationFee: parseFloat(this.state.installationFee),
+                totalFootage: parseInt(this.props.totalFootage),
+                productRentalPeriods: this.props.productRentalPeriods,
+                subtotal: parseFloat(this.props.subtotal),
+                installationFee: parseFloat(this.props.installationFee),
                 insured: this.state.insuranceChecked,
                 insuranceFee: parseFloat(this.state.insuranceFee),
-                total: parseFloat(this.state.subtotal + this.state.insuranceFee + this.state.salesTax),
+                total: parseFloat(this.props.subtotal + this.props.installationFee + this.state.insuranceFee + salesTax),
                 token: token.id,
 
                 shipping_name: this.state.shipping_name,
@@ -123,13 +119,15 @@ class CheckoutForm extends Component {
                 billing_city: this.state.billing_city,
                 billing_state: this.state.billing_state,
                 billing_zipcode: this.state.billing_zipcode,
+                salesTax
             }
         });
       this.setState({ submitDisabled: true });
     }
 
     render() {
-        console.log(this.state);
+        // console.log(this.state);
+        console.log(this.props);
         return(
               <Mutation
                 mutation={CREATE_ORDER}
@@ -307,7 +305,7 @@ class CheckoutForm extends Component {
                         insuranceFee={this.state.insuranceFee}
                         subtotal={this.props.subtotal + this.props.installationFee}
                         cartItems={this.props.cartItems} 
-                        salesTax={this.state.salesTax}/>
+                        salesTax={this.state.shipping_state === "Mississippi" ? this.salesTax * this.props.subtotal : 0} />
                     </div>
                   );
                 }}

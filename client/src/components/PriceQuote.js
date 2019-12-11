@@ -70,8 +70,9 @@ class PriceQuote extends Component{
                                 <p>Installation fee: ${installationFee}</p>
                                 <p>Total: ${total}</p>
                                 <AddItemToCart 
-                                    price={price} id={id} name={name} installationFee={installationFee} 
-                                    startDate={this.startDate} endDate={this.endDate} total={total}/>
+                                    price={price} id={id} name={name} installationFee={installationFee}
+                                    totalFootage={this.state.totalFeet} 
+                                    startDate={this.state.startDate} endDate={this.state.endDate} total={total}/>
                                 <button onClick={e => {
                                     e.preventDefault();
                                     // read from the cache
@@ -88,7 +89,9 @@ class PriceQuote extends Component{
                                             endDate: this.state.endDate,
                                             subtotal: price, 
                                             installationFee, 
-                                            total }]
+                                            total,
+                                            totalFootage: this.state.totalFeet
+                                        }]
                                     }
                                     cache.writeQuery({ query: FETCH_CART_ITEMS, data })
                                     this.props.history.push("/checkout");

@@ -10,7 +10,6 @@ const OrderSchema = new Schema({
         type: String,
         required: true
     },
-    
     productRentalPeriods: [
         {
             startDate: {
@@ -115,6 +114,10 @@ const OrderSchema = new Schema({
         type: Number
     },
     total: {
+        type: Number,
+        required: true
+    },
+    totalFootage: {
         type: Number,
         required: true
     },
