@@ -3,8 +3,6 @@ import CheckoutForm from './CheckoutForm';
 import { FETCH_CART_ITEMS_AND_USER } from "../../graphql/queries";
 import { Elements, StripeProvider } from "react-stripe-elements";
 import { Query } from "react-apollo";
-import CartItem from "../cart/CartItem";
-import RemoveItemFromCart from "../RemoveFromCart";
 
 const Checkout = () => {
     return(
@@ -17,42 +15,27 @@ const Checkout = () => {
                     let subtotal = data.cart.map(item => item.subtotal).reduce((acc, cv) => acc + cv);
                     let total = data.cart.map(item => item.total).reduce((acc, cv) => acc + cv);
                     let productIdList = data.cart.map(item => item.id);
-                    let insuranceFee = data.insuranceFee;
                     let productRentalPeriods = data.cart.map(item => `${item.startDate},${item.endDate}`);
                     const user = data.userId
                     // console.log(data);
                     return (
-                      <div className="flex space-evenly">
                         <div>
                           <StripeProvider apiKey="pk_test_W1knFGWMPCttW9lRpPYvYOhi00YbWlaJ32">
                             <div className="example">
                               <Elements>
                                 <CheckoutForm
                                   user={user}
-                                  products={productIdList}
+                                  productIdList={productIdList}
                                   subtotal={subtotal}
                                   total={total}
                                   installationFee={installationFee}
-                                  insuranceFee={insuranceFee}
                                   productRentalPeriods={productRentalPeriods}
+                                  cartItems={data.cart}
                                 />
                               </Elements>
                             </div>
                           </StripeProvider>
                         </div>
-                        <div>
-                          <h3>Order Summary</h3>
-                          {data.cart.map(cartItem => (
-                            <div key={cartItem.id}>
-                              <CartItem cartItem={cartItem} total={total} />
-                              <RemoveItemFromCart id={cartItem.id} />
-                              {/* { insuranceFee > 0 ? (<p> Insurance Fee: ${insuranceFee}</p>) : ""} */}
-                              <hr />
-                            </div>
-                          ))}
-                          <p>Total: ${total}</p>
-                        </div>
-                      </div>
                     );
                 } else {
                   return (

@@ -111,9 +111,9 @@ const OrderSchema = new Schema({
         type: Number,
         required: true
     },
-    // salesTax: {
-    //     type: Number
-    // },
+    salesTax: {
+        type: Number
+    },
     total: {
         type: Number,
         required: true
