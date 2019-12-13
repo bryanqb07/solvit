@@ -8,6 +8,34 @@ body{
   margin: 0;
 }
 
+/* .pin-bottom {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+} */
+
+.footer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-container{
+  padding-top: 5px;
+}
+
+.margin-left{
+  margin-left: 1em;
+}
+
+.default-font-color{
+  color: black;
+}
+
+.primary-font-color{
+  color: #fff;
+}
+
 .top-padding{
   padding-top: 0.5em;
 }
@@ -22,6 +50,9 @@ body{
 }
 
 .topbar-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   /* background-color: yellow; */
 }
 
@@ -35,7 +66,6 @@ body{
 
 .no-decoration{
   text-decoration: none;
-  color: black;
 }
 
 .search-input{
@@ -79,6 +109,10 @@ body{
 
 .grey-border-bottom{
   border-bottom: 1px solid lightgray;
+}
+
+.is-active{
+  color: gold;
 }
 
 /* body {

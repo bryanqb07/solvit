@@ -24,6 +24,7 @@ import Upload from './Upload';
 import Nav from "./Nav";
 import TitleBanner from "./TitleBanner";
 import MenuBar from "./MenuBar";
+import Footer from "./Footer";
 
 
 const App = (props) => (
@@ -55,7 +56,7 @@ const App = (props) => (
           <Nav />
           <TitleBanner history={props.history} />
           <MenuBar />
-          
+
           <div className="main-content-wrapper wrapped">
             <Switch>
               <Route exact path="/products/:id" component={ProductDetail} />
@@ -70,10 +71,13 @@ const App = (props) => (
               <Route exact path="/" component={ProductsIndex} />
             </Switch>
           </div>
-          <div className="bottom-banner">
-            <h1>Fence Share</h1>
+          <div>
+
           </div>
-          <div className="footer">Copyright fenceshare</div>
+          {/* <div className="bottom-banner wrapped">
+            <h1>Fence Share</h1>
+          </div> */}
+        <Footer />
       </Route>
     </Switch>
   </div>

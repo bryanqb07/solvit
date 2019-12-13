@@ -13,12 +13,11 @@ const CategoriesIndex = ({ sidebar }) => {
         className="categories-container"
       >
         <Link to="/" 
-          className="no-decoration large-font category-link"
-              activeClassName='is-active '>Home</Link>
+          className="no-decoration large-font category-link default-font-color">Home</Link>
         {data.categories.map(category => (
           <NavLink
             to={"/categories/" + category.id}
-            className="no-decoration large-font category-link"
+            className="no-decoration large-font category-link default-font-color"
             activeClassName='is-active'
             key={category.id}
           >

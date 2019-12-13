@@ -8,7 +8,7 @@ const MenuBar = () => (
             <CategoriesIndex sidebar={true} />
             <NavLink
                 to="/cart"
-                className="no-decoration large-font"
+                className="no-decoration large-font default-font-color"
                 activeClassName='is-active'><i className="fa fa-shopping-cart"></i></NavLink>
         </div>
     </div>
