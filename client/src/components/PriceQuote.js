@@ -24,6 +24,7 @@ class PriceQuote extends Component{
         if(!this.state.clicked){
             return(
                 <div>
+                    <h3>Get an instant price quote online!</h3>
                     <label className="price-quote-label">Start Date </label>
                     <br />
                     <input
@@ -75,6 +76,7 @@ class PriceQuote extends Component{
                             const total = price + installationFee
                             return (
                             <div>
+                                <h3>Here's your quote</h3>
                                 <p>Subtotal: ${price}</p>
                                 <p>Installation fee: ${installationFee}</p>
                                 <p>Total: ${total}</p>
@@ -83,6 +85,7 @@ class PriceQuote extends Component{
                                     totalFootage={this.state.totalFeet} 
                                     startDate={this.state.startDate} endDate={this.state.endDate} total={total}/>
                                 <button 
+                                    className="selection-button pink-bg zoom"
                                     onClick={e => {
                                     e.preventDefault();
                                     // read from the cache

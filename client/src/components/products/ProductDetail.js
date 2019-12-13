@@ -23,7 +23,6 @@ const ProductDetail = ({match, history}) => {
                 <p>Description: {product.description}</p>
                 <p>Dimensions: {product.width} x {product.height} ft.</p>
                 <hr className="light-grey" />
-                <h3>Get an instant price quote online!</h3>
                 <PriceQuote id={product.id} history={history} />
             </div>
         </div>
