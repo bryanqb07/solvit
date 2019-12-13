@@ -6,7 +6,7 @@ const UserOrders = (props) => (
     <Query query={FETCH_USER_ORDERS} variables={{user: props.match.params.id }}>
         {({ loading, error, data }) => {
             if (loading) return <div className="loader"></div>
-            if (error) return `Error! ${error.message}`;
+            if (error) return <div className="error">`Error! ${error.message}`</div>
             const orders = data.userOrders;
             if(orders.length > 0){
                 return (

@@ -8,7 +8,7 @@ function OrderDetail(props) {
         <Query query={FETCH_ORDER} variables={props.match.params}>
             {({ loading, error, data }) => {
                 if (loading) return <div className="loader"></div>
-                if (error) return `Error! ${error.message}`;
+                if (error) return <div className="error">`Error! ${error.message}`</div>
 
                 const order = data.order;
                 // console.log(order);

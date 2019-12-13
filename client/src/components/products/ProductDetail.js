@@ -10,19 +10,22 @@ function ProductDetail(props) {
         <Query query={FETCH_PRODUCT} variables={ props.match.params }>
             {({ loading, error, data }) => {
                 if (loading) return <div className="loader"></div>
-                if (error) return `Error! ${error.message}`;
+                if (error) return <div className="error">`Error! ${error.message}`</div>
                 
                 const product = data.product;
 
                 return (
                     <div className="product-view-container">
                         <div className="product-view-left">
-                            <img src="testFence.png" alt="product" />
+                            <img src="testPanel.jpg" alt="product" className="product-detail-img" />
                         </div>
                         <div className="product-view-right">
-                            <h3>Name: {product.name}</h3>
+                            <h2>{product.name}</h2>
+                            <hr className="light-grey" />
                             <p>Description: {product.description}</p>
                             <p>Dimensions: {product.width} x {product.height} ft.</p>
+                            <hr className="light-grey" />
+                            <h3>Get an instant price quote online!</h3>
                             <PriceQuote id={product.id} />
                         </div>
                     </div>

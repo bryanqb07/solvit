@@ -289,8 +289,52 @@ button{
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-/* 
+
 .product-view-container{
-  display: flex;
-  justify-content: space-evenly;
+    display: flex;
+    justify-content: center;
+    padding-top: 5em;
+    padding-bottom: 5em;
+}
+
+.product-detail-img{
+  width: 600px;
+  height: 600px;
+}
+
+light-grey{
+  color: lightgray;
+}
+
+.pink-bg{
+  background-color: #E91E63;
+}
+
+.quote-button{
+    padding: 0 60px;
+    color:#fff;
+    line-height: 46px;
+    height: 46px;
+    font-size: 16px;
+    font-weight: 700;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+/* 
+.price-quote-label{
+
 } */
+
+.quote-input{
+    height: 3em;
+    width: 16em;
+    margin-bottom: 1em;
+}
+
+.error{
+  color: red;
+}
+
+.fa-shopping-cart:hover{
+  color: gold;
+}

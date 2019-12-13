@@ -9,7 +9,7 @@ const RemoveItemFromCart = ({ id }) => {
         <Query query={FETCH_CART_ITEMS} >
           {({ loading, error, data }) => {
             if (loading) return <div className="loader"></div>;
-            if (error) return `Error! ${error.message}`;
+            if (error) return <div className="error">`Error! ${error.message}`</div>
             if (!data) return;
             if (data.cart.some(item => item.id === id)) {
               return (

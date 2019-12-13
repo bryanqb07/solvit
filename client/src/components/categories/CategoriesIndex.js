@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/react-hooks';
 const CategoriesIndex = ({ sidebar }) => {
   const { loading, error, data } = useQuery(FETCH_CATEGORIES);
   if (loading) return <div className="loader"></div>
-  if (error) return `Error! ${error.message}`;
+  if (error) return <div className="error">`Error! ${error.message}`</div>
   if (sidebar) {
     return (
       <div
