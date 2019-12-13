@@ -8,7 +8,7 @@ const RemoveItemFromCart = ({ id }) => {
       {cache => (
         <Query query={FETCH_CART_ITEMS} >
           {({ loading, error, data }) => {
-            if (loading) return <div class="loader"></div>;
+            if (loading) return <div className="loader"></div>;
             if (error) return `Error! ${error.message}`;
             if (!data) return;
             if (data.cart.some(item => item.id === id)) {

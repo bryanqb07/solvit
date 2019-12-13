@@ -23,7 +23,7 @@ class CartContainer extends Component {
                 </Modal>
                 <i
                     onClick={this.showModal} 
-                    className="fa fa-shopping-cart w3-margin-right">
+                    className="fa fa-shopping-cart">
                 </i>
             </div>
         );

@@ -31,7 +31,8 @@ class Nav extends Component {
                         {({ data }) => {
                             if (data.isLoggedIn) {
                                 return (
-                                    <div>
+                                    <div className="topbar-wrapper">
+                                        <span>Welcome !</span>
                                         <Link
                                             to={"/users/" + data.userId}
                                             className="w3-bar-item w3-button w3-padding">
@@ -69,7 +70,7 @@ class Nav extends Component {
                                         </Modal>
                                         <button
                                             type="button" onClick={this.showModal("showLoginModal")}
-                                            className="w3-bar-item w3-button w3-padding">
+                                            className="">
                                             Login
                                         </button>
                                         <Modal show={this.state.showSignupModal} handleClose={this.hideModal("showSignupModal")}>
@@ -77,7 +78,7 @@ class Nav extends Component {
                                         </Modal>
                                         <button 
                                             type="button" onClick={this.showModal("showSignupModal")}
-                                            className="w3-bar-item w3-button w3-padding">
+                                            className="">
                                             Register
                                          </button>
                                     </div>

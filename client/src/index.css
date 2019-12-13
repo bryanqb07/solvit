@@ -1,4 +1,8 @@
-body {
+*{
+  box-sizing: border-box;
+}
+
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -132,7 +136,7 @@ textarea{
   justify-content: space-evenly;
 }
 
-.search {    
+/* .search {    
     width: 200px;
     padding: 5px;
     -webkit-transition: all .5s ease;
@@ -153,7 +157,7 @@ textarea{
 
 .dollar-sign{
   margin-left: 5px;
-}
+} */
 
 button{
   cursor: pointer;
@@ -172,8 +176,8 @@ button{
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
+/* 
 .product-view-container{
   display: flex;
   justify-content: space-evenly;
-}
+} */
