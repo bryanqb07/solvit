@@ -31,35 +31,37 @@ class Nav extends Component {
                         {({ data }) => {
                             if (data.isLoggedIn) {
                                 return (
-                                    <div className="topbar-wrapper">
-                                        <span>Welcome !</span>
-                                        <Link
-                                            to={"/users/" + data.userId}
-                                            className="w3-bar-item w3-button w3-padding">
-                                            User Profile
-                                        </Link>
-                                        <Link
-                                            to={ "/orders/" + data.userId }
-                                            className="w3-bar-item w3-button w3-padding">
-                                            My Orders
-                                        </Link>
-                                        <button
-                                            className="w3-bar-item w3-button w3-padding"
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                localStorage.removeItem("auth-token");
-                                                localStorage.removeItem("isStaff");
-                                                client.writeData({
-                                                    data: {
-                                                        isLoggedIn: false,
-                                                        isStaff: false,
-                                                        userId: null
-                                                    }
-                                                });
-                                            }}
-                                        >
-                                            Logout
-                                        </button>
+                                    <div className="background-main">
+                                        <div className="topbar-wrapper wrapped top-padding">
+                                            <span>Welcome !</span>
+                                            <Link
+                                                to={"/users/" + data.userId}
+                                                className="w3-bar-item w3-button w3-padding">
+                                                User Profile
+                                            </Link>
+                                            <Link
+                                                to={ "/orders/" + data.userId }
+                                                className="w3-bar-item w3-button w3-padding">
+                                                My Orders
+                                            </Link>
+                                            <button
+                                                className="w3-bar-item w3-button w3-padding"
+                                                onClick={e => {
+                                                    e.preventDefault();
+                                                    localStorage.removeItem("auth-token");
+                                                    localStorage.removeItem("isStaff");
+                                                    client.writeData({
+                                                        data: {
+                                                            isLoggedIn: false,
+                                                            isStaff: false,
+                                                            userId: null
+                                                        }
+                                                    });
+                                                }}
+                                            >
+                                                Logout
+                                            </button>
+                                        </div>
                                     </div>
                                 );
                             } else {

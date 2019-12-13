@@ -14,13 +14,13 @@ const Search = ({ history }) => {
 
     return (
         <div className="search-wrapper">
-                <input className=""
+                <input className="search-input"
                     type="text"
                     placeholder="Search product..."
                     value={queryString}
                     onChange={e => setqueryString(e.target.value)}
                 />
-                <i className="fa fa-search" onClick={handleClick}></i>
+                <i className="fa fa-search search-button" onClick={handleClick}></i>
         </div>
     );
 };

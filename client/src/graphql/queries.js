@@ -180,7 +180,8 @@ export const SEARCH_PRODUCTS = gql`
       id,
       name,
       description,
-      weight
+      width,
+      height
     }
   }
 `;

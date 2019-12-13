@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, NavLink } from 'react-router-dom';
 import { FETCH_CATEGORIES } from "../../graphql/queries";
-import { Query } from "react-apollo";
 import { useQuery } from '@apollo/react-hooks';
 
 const CategoriesIndex = ({ sidebar }) => {
@@ -11,13 +10,15 @@ const CategoriesIndex = ({ sidebar }) => {
   if (sidebar) {
     return (
       <div
-        className=""
-        id="categoryList"
+        className="categories-container"
       >
+        <Link to="/" 
+          className="no-decoration large-font category-link"
+              activeClassName='is-active '>Home</Link>
         {data.categories.map(category => (
           <NavLink
             to={"/categories/" + category.id}
-            className=""
+            className="no-decoration large-font category-link"
             activeClassName='is-active'
             key={category.id}
           >

@@ -22,10 +22,12 @@ import ConfirmationPage from "./ConfirmationPage";
 import ProductsSearch from "./products/ProductSearch";
 import Upload from './Upload';
 import Nav from "./Nav";
-import Search from "./Search";
+import TitleBanner from "./TitleBanner";
+import MenuBar from "./MenuBar";
+
 
 const App = (props) => (
-  <div className="wrapper">
+  <div className="">
     <Switch>
       <Route path="/staff">
         <Sidebar />
@@ -51,37 +53,27 @@ const App = (props) => (
 
       <Route path="/" >
           <Nav />
-          <div className="title-bar">
-            <Link to="/"><h1>Fence Share</h1></Link>
-            <Search history={props.history} />
-            <div>
-              <span>Customer Support</span>
-              <span>504-905-5138</span>
-            </div>
+          <TitleBanner history={props.history} />
+          <MenuBar />
+          
+          <div className="main-content-wrapper wrapped">
+            <Switch>
+              <Route exact path="/products/:id" component={ProductDetail} />
+              <Route exact path="/checkout" component={Checkout} />
+              <Route exact path="/cart" component={Cart} />
+              <Route exact path="/users/:id" component={UserProfile} />
+              <Route exact path="/orders/:id" component={UserOrders} />
+              <Route exact path="/categories/:id" component={CategoryDetail} />
+              <Route path="/confirmation" component={ConfirmationPage} />
+              <Route path="/search" component={ProductsSearch} />
+              <Route exact path="/upload" component={Upload} />
+              <Route exact path="/" component={ProductsIndex} />
+            </Switch>
           </div>
-          <div className="nav-bar-wrapper">
-            <CategoriesIndex sidebar={true} />
-            <Link to="/cart"><i className="fa fa-shopping-cart"></i></Link>
+          <div className="bottom-banner">
+            <h1>Fence Share</h1>
           </div>
-
-          <div className="">
-            <div className="" id=""></div>
-            {/* <TopNav /> */}
-            <div className="">
-              <Switch>
-                <Route exact path="/products/:id" component={ProductDetail} />
-                <Route exact path="/checkout" component={Checkout} />
-                <Route exact path="/cart" component={Cart} />
-                <Route exact path="/users/:id" component={UserProfile} />
-                <Route exact path="/orders/:id" component={UserOrders} />
-                <Route exact path="/categories/:id" component={CategoryDetail} />
-                <Route path="/confirmation" component={ConfirmationPage} />
-                <Route path="/search" component={ProductsSearch} />
-                <Route exact path="/upload" component={Upload} />
-                <Route exact path="/" component={ProductsIndex} />
-              </Switch>
-            </div>
-          </div>
+          <div className="footer">Copyright fenceshare</div>
       </Route>
     </Switch>
   </div>
