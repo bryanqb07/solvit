@@ -148,7 +148,7 @@ class CheckoutForm extends Component {
                   return (
                     <div className="flex space-evenly">
                       <div className="checkout-form-wrapper">
-                        <div className="checkout">
+                        <div className="billing-checkout">
                           <h3>Billing Information</h3>
                           <form>
                             <label>Name</label>
@@ -218,6 +218,9 @@ class CheckoutForm extends Component {
                           </form>
                         </div>
                         <br />
+                      </div>
+                      <div className="shipping-checkout-container">
+                        <h3>Shipping Information</h3>
                         <label>Shipping Info Matches Billing Info</label>
                         <input
                           type="checkbox"
@@ -229,7 +232,6 @@ class CheckoutForm extends Component {
                           ""
                         ) : (
                           <div>
-                            <h3>Shipping Information</h3>
                             <form>
                               <label>Name</label>
                               <input
@@ -294,20 +296,23 @@ class CheckoutForm extends Component {
                           onChange={this.toggleInsuranceCheck}
                         />
                         <br />
+                        <p>{this.state.message}</p>
+                      </div>
+                      <div className="checkout-order-container">
+                        <CheckoutSummary
+                          insuranceFee={this.state.insuranceFee}
+                          subtotal={this.props.subtotal + this.props.installationFee}
+                          cartItems={this.props.cartItems}
+                          salesTax={this.state.shipping_state === "Mississippi" ? this.salesTax * this.props.subtotal : 0}
+                        />
                         <button
+                          className="quote-button pink-bg"
                           disabled={this.state.submitDisabled}
                           onClick={e => this.handleSubmit(e, newOrder)}
                         >
                           Complete Purchase
                         </button>
-                        <p>{this.state.message}</p>
                       </div>
-                      <CheckoutSummary
-                        insuranceFee={ this.state.insuranceFee }
-                        subtotal={this.props.subtotal + this.props.installationFee}
-                        cartItems={this.props.cartItems} 
-                        salesTax={this.state.shipping_state === "Mississippi" ? this.salesTax * this.props.subtotal  : 0} 
-                      />
                     </div>
                   );
                 }}
