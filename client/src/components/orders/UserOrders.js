@@ -8,22 +8,16 @@ const UserOrders = (props) => (
             if (loading) return <div className="loader"></div>
             if (error) return <div className="error">`Error! ${error.message}`</div>
             const orders = data.userOrders;
+
             if(orders.length > 0){
                 return (
                     <div className="orders-wrapper">
                         <h3>Orders</h3>
                         {orders.map(order => (
                             <div key={order.id} className="order-container">
-                                <p>ID: {order.id}</p>
-                                <p>Products: </p> 
-                                { order.products.map(product =>
-                                    <div className="order-product-container" key={product.id}>
-                                        <p>ID: {product.id}</p>
-                                        <p>Name: {product.name}</p>
-                                        <p>Price: ${product.price}</p>
-                                    </div>
-                                )}
+                                <p>Confirmation #: {order.id}</p> 
                                 <p>Total: ${order.total}</p>
+                                <p>Shipping Status: {order.shippingStatus}</p>
                             </div>
                         ))}
                     </div>

@@ -49,10 +49,12 @@ body{
   background-color: #384259;
 }
 
+
+
 .topbar-wrapper{
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   /* background-color: yellow; */
 }
 
@@ -115,6 +117,41 @@ body{
   color: gold;
 }
 
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-main {
+  position:fixed;
+  background: white;
+  width: 30%;
+  height: auto;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+
+.modal-main button:hover{
+  cursor: pointer;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
+.login-wrapper{
+  padding: 20px;
+}
+
 /* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -150,40 +187,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide { font-family: "Montserrat", sans-serif; }
   margin-top: 83px;
 }
 
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width:100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-}
-
-.modal-main {
-  position:fixed;
-  background: white;
-  width: 30%;
-  height: auto;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
-}
-
-.modal-main button:hover{
-  cursor: pointer;
-}
-
-.display-block {
-  display: block;
-}
-
-.display-none {
-  display: none;
-}
-
-.login-wrapper{
-  padding: 20px;
-}
 
 .is-active{
   background-color: lightgray;
@@ -456,6 +459,10 @@ light-grey{
   justify-content: space-between;
 }
 
+.flex-end{
+  justify-content: flex-end;
+}
+
 .half-width{
   width: 105px; 
 }
@@ -506,6 +513,25 @@ light-grey{
 }
 .cart-item-name{
   margin-right: 10px;
+}
+
+.topnav-button{
+    color: white;
+    background-color: #384259;
+    border: none;
+    font-size: 16px;
+    
+}
+
+.margin-right {
+  margin-right: 5px;
+}
+
+.order-container{
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px;
 }
 
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */

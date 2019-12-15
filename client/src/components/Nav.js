@@ -32,7 +32,7 @@ class Nav extends Component {
                             if (data.isLoggedIn) {
                                 return (
                                     <div className="background-main primary-font-color">
-                                        <div className="topbar-wrapper wrapped top-padding">
+                                        <div className="topbar-wrapper wrapped top-padding space-between">
                                             <div className="top-nav-left">    
                                                 <span>Welcome !</span>
                                                 <button
@@ -70,23 +70,27 @@ class Nav extends Component {
                                 );
                             } else {
                                 return (
-                                    <div>
-                                        <Modal show={this.state.showLoginModal} handleClose={this.hideModal("showLoginModal")}>
-                                            <Login />
-                                        </Modal>
-                                        <button
-                                            type="button" onClick={this.showModal("showLoginModal")}
-                                            className="">
-                                            Login
-                                        </button>
-                                        <Modal show={this.state.showSignupModal} handleClose={this.hideModal("showSignupModal")}>
-                                            <Registration />
-                                        </Modal>
-                                        <button 
-                                            type="button" onClick={this.showModal("showSignupModal")}
-                                            className="">
-                                            Register
-                                         </button>
+                                    <div className="background-main primary-font-color">
+                                        <div className="topbar-wrapper wrapped top-padding flex-end">
+                                            <div>
+                                                <Modal show={this.state.showLoginModal} handleClose={this.hideModal("showLoginModal")}>
+                                                    <Login />
+                                                </Modal>
+                                                <button
+                                                    type="button" onClick={this.showModal("showLoginModal")}
+                                                    className="topnav-button margin-right">
+                                                    Login
+                                                </button>
+                                                <Modal show={this.state.showSignupModal} handleClose={this.hideModal("showSignupModal")}>
+                                                    <Registration />
+                                                </Modal>
+                                                <button
+                                                    type="button" onClick={this.showModal("showSignupModal")}
+                                                    className="topnav-button">
+                                                    Register
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 );
                             }

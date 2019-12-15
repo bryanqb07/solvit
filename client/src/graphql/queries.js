@@ -118,10 +118,7 @@ export const FETCH_USER_ORDERS = gql`
     userOrders(user: $user){
       id,
       total,
-      products{
-        id,
-        name
-      }
+      shippingStatus
     }
   }
 `;
