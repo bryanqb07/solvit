@@ -35,14 +35,10 @@ class CheckoutForm extends Component {
     }
 
     toggleInsuranceCheck(e){      
-      if(this.state.insuranceChecked){
-        this.setState({ insuranceChecked: false, insuranceFee: 0 });
-      }else{
-        this.setState({
-          insuranceChecked: true,
-          insuranceFee: this.insuranceRate * this.props.subtotal
-        });
-      }
+      this.setState({ 
+        insuranceChecked: !this.state.insuranceChecked, 
+        insuranceFee: this.state.insuranceChecked ? 0 : this.insuranceRate * this.props.subtotal
+      });
     }
 
     update(field) {
