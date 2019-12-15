@@ -79,6 +79,7 @@ class PriceQuote extends Component{
                                 <h3>Here's your quote</h3>
                                 <p>Subtotal: ${price}</p>
                                 <p>Installation fee: ${installationFee}</p>
+                                <hr className="light-grey "/>
                                 <p>Total: ${total}</p>
                                 <AddItemToCart 
                                     price={price} id={id} name={name} installationFee={installationFee}

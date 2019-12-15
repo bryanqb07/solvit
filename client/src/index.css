@@ -384,3 +384,136 @@ light-grey{
 .zoom:hover {
   transform: scale(1.25); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
+/* 
+.billing-checkout input{
+  height: 3em;
+}
+
+.billing-checkout p{
+  margin: 0.75em 0;
+} */
+
+.row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  margin: 0 -16px;
+}
+
+.col-25 {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+}
+
+.col-50 {
+  -ms-flex: 50%; /* IE10 */
+  flex: 50%;
+}
+
+.col-75 {
+  -ms-flex: 75%; /* IE10 */
+  flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+  padding: 0 16px;
+}
+
+.container {
+  background-color: #f2f2f2;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+
+.example input[type=text] {
+  width: 220px;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.example label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.example select{
+  width: 105px;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  height: 40px;
+  background: white;
+}
+
+.space-between{
+  justify-content: space-between;
+}
+
+.half-width{
+  width: 105px; 
+}
+
+.StripeElement{
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  height: 40px;
+  background: white;
+}
+
+.secure-payment{
+    position: absolute;
+    width: 310px;
+    left: 175px;
+}
+
+#zipcode{
+  width: 105px;
+}
+
+.state-zip-container{
+  display: flex;
+  justify-content: space-between;
+  width: 220px;
+}
+
+.checkout-btn{
+  margin-top: 20px;
+}
+
+.cart-item-checkout-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-item-checkout-container button{
+    color: #fff;
+    background-color: red;
+    /* line-height: 0px; */
+    height: 25px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    width: 30px;
+    text-align: center;
+}
+.cart-item-name{
+  margin-right: 10px;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+  .col-25 {
+    margin-bottom: 20px;
+  }
+}

@@ -14,6 +14,9 @@ class CheckoutForm extends Component {
             insuranceFee: this.props.subtotal ? this.props.subtotal * this.insuranceRate : 0,        
             insuranceChecked: true,
             email: "",
+            name: "",
+            telephone: "",
+
             shipping_name: "",
             shipping_address1: "",
             shipping_address2: "",
@@ -21,15 +24,15 @@ class CheckoutForm extends Component {
             shipping_state: "",
             shipping_zipcode: "",
 
-            billing_name: "",
-            billing_address1: "",
-            billing_address2: "",
-            billing_city: "",
-            billing_state: "",
-            billing_zipcode: "",
+            // billing_name: "",
+            // billing_address1: "",
+            // billing_address2: "",
+            // billing_city: "",
+            // billing_state: "",
+            // billing_zipcode: "",
 
             message: "",
-            checked: true, // billing info = shipping info
+            // checked: true, // billing info = shipping info
             submitDisabled: false
         };
         this.toggleCheck = this.toggleCheck.bind(this);
@@ -146,7 +149,7 @@ class CheckoutForm extends Component {
               >
                 {(newOrder, { data }) => {
                   return (
-                    <div className="flex space-evenly">
+                    <div className="flex space-between">
                       <div className="checkout-form-wrapper">
                         <div className="billing-checkout">
                           <h3>Billing Information</h3>
@@ -167,10 +170,19 @@ class CheckoutForm extends Component {
                               type="text"
                             />
                             <br />
+                            <label>Telephone</label>
+                            <input
+                              onChange={this.update("telephone")}
+                              value={this.state.telephone}
+                              placeholder="(555) 555-5555"
+                              type="text"
+                            />
+                            <br />
                             <label>Credit Card Details</label>
                             <CardElement />
                             <br />
-                            <label>Address Line 1</label>
+                            <img src="stripe-logo.png" className="secure-payment" />
+                            {/* <label>Address Line 1</label>
                             <input
                               onChange={this.updateShipping("address1")}
                               value={this.state.billing_address1}
@@ -210,27 +222,18 @@ class CheckoutForm extends Component {
                             <br />
                             <label>Zip Code</label>
                             <input
+                              className="half-width"
                               onChange={this.updateShipping("zipcode")}
                               value={this.state.billing_zipcode}
                               placeholder="Zip Code"
                               type="text"
-                            />
+                            /> */}
                           </form>
                         </div>
                         <br />
                       </div>
                       <div className="shipping-checkout-container">
                         <h3>Shipping Information</h3>
-                        <label>Shipping Info Matches Billing Info</label>
-                        <input
-                          type="checkbox"
-                          checked={this.state.checked}
-                          onChange={this.toggleCheck}
-                        />
-                        <br />
-                        {this.state.checked ? (
-                          ""
-                        ) : (
                           <div>
                             <form>
                               <label>Name</label>
@@ -265,37 +268,44 @@ class CheckoutForm extends Component {
                                 type="text"
                               />
                               <br />
-                              <label>State</label>
-                              <select
-                                onChange={this.update("shipping_state")}
-                                value={this.state.shipping_state}
-                                placeholder="State"
-                                type="text"
-                              >
-                                {this.stateList.map(state => (
-                                  <option value={state} key={state}>
-                                    {state}
-                                  </option>
-                                ))}
-                              </select>
-                              <br />
-                              <label>Zip Code</label>
-                              <input
-                                onChange={this.update("shipping_zipcode")}
-                                value={this.state.shipping_zipcode}
-                                placeholder="Zip Code"
-                                type="text"
-                              />
+                              <div className="state-zip-container">
+                                <div className="state-container">
+                                <label>State</label>
+                                <select
+                                  onChange={this.update("shipping_state")}
+                                  value={this.state.shipping_state}
+                                  placeholder="State"
+                                  type="text"
+                                >
+                                  {this.stateList.map(state => (
+                                    <option value={state} key={state}>
+                                      {state}
+                                    </option>
+                                  ))}
+                                </select>
+                                </div>
+
+                                <div className="zip-container">
+                                  <label>Zip Code</label>
+                                  <input
+                                    className="half-width"
+                                    onChange={this.update("shipping_zipcode")}
+                                    value={this.state.shipping_zipcode}
+                                    placeholder="Zip Code"
+                                    id="zipcode"
+                                    type="text"
+                                  />
+                                </div>
+                              </div>
                             </form>
                           </div>
-                        )}
-                        <label>Yes, I would like to insure my order </label>
+                        {/* <label>Shipping Info Matches Billing Info</label>
                         <input
                           type="checkbox"
-                          checked={this.state.insuranceChecked}
-                          onChange={this.toggleInsuranceCheck}
+                          checked={this.state.checked}
+                          onChange={this.toggleCheck}
                         />
-                        <br />
+                        <br /> */}
                         <p>{this.state.message}</p>
                       </div>
                       <div className="checkout-order-container">
@@ -305,8 +315,15 @@ class CheckoutForm extends Component {
                           cartItems={this.props.cartItems}
                           salesTax={this.state.shipping_state === "Mississippi" ? this.salesTax * this.props.subtotal : 0}
                         />
+                        <span>Yes, I would like to insure my order </span>
+                        <input
+                          type="checkbox"
+                          checked={this.state.insuranceChecked}
+                          onChange={this.toggleInsuranceCheck}
+                        />
+                        <br />
                         <button
-                          className="quote-button pink-bg"
+                          className="quote-button pink-bg zoom checkout-btn"
                           disabled={this.state.submitDisabled}
                           onClick={e => this.handleSubmit(e, newOrder)}
                         >

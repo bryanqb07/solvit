@@ -7,14 +7,18 @@ const CheckoutSummary = ({ cartItems, subtotal, insuranceFee, salesTax }) => (
     <h3>Order Summary</h3>
     {cartItems.map(cartItem => (
       <div key={cartItem.id}>
-        <CartItem cartItem={cartItem} />
-        <RemoveItemFromCart id={cartItem.id} />
-        { insuranceFee > 0 ? <p> Insurance Fee: ${insuranceFee.toFixed(2)}</p> : ""}
-        { salesTax > 0 ? <p> Sales Tax (MS orders only): ${salesTax.toFixed(2)}</p> : ""}
+        <div className="cart-item-checkout-container">
+          <CartItem cartItem={cartItem} />
+          <RemoveItemFromCart id={cartItem.id} mini={true} />
+        </div>
         <hr />
       </div>
     ))}
-    <p>Total: ${(subtotal + insuranceFee + salesTax).toFixed(2)}</p>
+
+    {insuranceFee > 0 ? <div><p> Insurance Fee: ${insuranceFee.toFixed(2)}</p><hr /></div> : ""}
+    {salesTax > 0 ? <div><p> Sales Tax (MS orders only): ${salesTax.toFixed(2)}</p><hr /></div> : ""}
+
+    <p><b>Total: ${(subtotal + insuranceFee + salesTax).toFixed(2)}</b></p>
   </div>
 );
 

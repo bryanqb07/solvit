@@ -2,7 +2,7 @@ import React from "react";
 import { FETCH_CART_ITEMS } from "../graphql/queries";
 import { ApolloConsumer, Query } from "react-apollo";
 
-const RemoveItemFromCart = ({ id }) => {
+const RemoveItemFromCart = ({ id, mini }) => {
   return (
     <ApolloConsumer>
       {cache => (
@@ -28,7 +28,7 @@ const RemoveItemFromCart = ({ id }) => {
                     cache.writeQuery({ query: FETCH_CART_ITEMS, data });
                   }}
                 >
-                  Remove from cart
+                  { mini ? 'x' : 'Remove from cart' }
                 </button>
               );
             }
