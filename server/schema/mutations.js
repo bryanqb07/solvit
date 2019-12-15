@@ -229,6 +229,9 @@ const mutation = new GraphQLObjectType({
         newOrder: {
             type: OrderType,
             args: {
+                user: { type: GraphQLID },
+                email: { type: GraphQLString },
+                name: { type: GraphQLString },
                 token: { type: GraphQLString },
                 products: { type: GraphQLList(GraphQLID) },
                 subtotal: { type: GraphQLFloat },
@@ -239,26 +242,17 @@ const mutation = new GraphQLObjectType({
                 total: { type: GraphQLFloat },
                 totalFootage: { type: GraphQLInt },
                 productRentalPeriods: {type: GraphQLList(GraphQLString) },
-                // prices: { type: GraphQLList(GraphQLInt) },
-                user: { type: GraphQLID },
-                email: { type: GraphQLString },
-                shipping_name: { type: GraphQLString },
-                shipping_address1: { type: GraphQLString },
-                shipping_address2: { type: GraphQLString },
-                shipping_city: { type: GraphQLString },
-                shipping_state: { type: GraphQLString },
-                shipping_zipcode: { type: GraphQLString },
-                billing_name: { type: GraphQLString },
-                billing_address1: { type: GraphQLString },
-                billing_address2: { type: GraphQLString },
-                billing_city: { type: GraphQLString },
-                billing_state: { type: GraphQLString },
-                billing_zipcode: { type: GraphQLString },
+                telephone: { type: GraphQLString }, 
+                shippingName: { type: GraphQLString },
+                address1: { type: GraphQLString },
+                address2: { type: GraphQLString },
+                city: { type: GraphQLString },
+                state: { type: GraphQLString },
+                zipcode: { type: GraphQLString }
             },
             async resolve(_, { 
-                token, products, user, total, shipping_name, shipping_address1, shipping_address2, shipping_city,
-                shipping_state, shipping_zipcode, billing_name, billing_address1, billing_address2, billing_city,
-                billing_state, billing_zipcode, email, productRentalPeriods, subtotal, installationFee, insured,
+                token, products, user, name, telephone, total, shippingName, address1, address2, city,
+                state, zipcode, email, productRentalPeriods, subtotal, installationFee, insured,
                 insuranceFee, salesTax, totalFootage
             }, ctx) {
                 const productDateList = productRentalPeriods.map(item => {
@@ -276,27 +270,16 @@ const mutation = new GraphQLObjectType({
                         totalFootage,
                         total,
                         email,
+                        name,
+                        telephone,
                         productRentalPeriods: productDateList,
-                        paymentInfo: {
-                          gateway: "Stripe",
-                          token
-                        },
-                        billingInfo: {
-                          name: billing_name,
-                          address1: billing_address1,
-                          address2: billing_address2,
-                          city: billing_city,
-                          state: billing_state,
-                          zipcode: billing_zipcode
-                        },
-                        shippingInfo: {
-                          name: shipping_name,
-                          address1: shipping_address1,
-                          address2: shipping_address2,
-                          city: shipping_city,
-                          state: shipping_state,
-                          zipcode: shipping_zipcode
-                        }
+                        token,
+                        shippingName,
+                        address1,
+                        address2,
+                        city,
+                        state,
+                        zipcode
                       };
                       if (user) order.user = user;
                     //   console.log(order);

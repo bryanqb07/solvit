@@ -17,53 +17,21 @@ class CheckoutForm extends Component {
             name: "",
             telephone: "",
 
-            shipping_name: "",
-            shipping_address1: "",
-            shipping_address2: "",
-            shipping_city: "",
-            shipping_state: "",
-            shipping_zipcode: "",
-
-            // billing_name: "",
-            // billing_address1: "",
-            // billing_address2: "",
-            // billing_city: "",
-            // billing_state: "",
-            // billing_zipcode: "",
+            shippingName: "",
+            address1: "",
+            address2: "",
+            city: "",
+            state: "",
+            zipcode: "",
 
             message: "",
             // checked: true, // billing info = shipping info
             submitDisabled: false
         };
-        this.toggleCheck = this.toggleCheck.bind(this);
         this.toggleInsuranceCheck = this.toggleInsuranceCheck.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.stateList = ["--Select State--", "Alabama", "Arkansas", "Florida", "Georgia", "Kentucky", "Louisiana", "Mississippi", 
             "North Carolina", "South Carolina", "Tennessee"];
-    }
-
-    toggleCheck(e){
-        if(this.state.checked){
-            this.setState({ 
-                shipping_name: "",
-                shipping_address1: "",
-                shipping_address2: "",
-                shipping_city: "",
-                shipping_state: "",
-                shipping_zipcode: "",
-                checked: false 
-            });
-        }else{
-            this.setState({
-                shipping_name: this.state.billing_name,
-                shipping_address1: this.state.billing_address1,
-                shipping_address2: this.state.billing_address2,
-                shipping_city: this.state.billing_city,
-                shipping_state: this.state.billing_state,
-                shipping_zipcode: this.state.billing_zipcode,
-                checked: true
-            });
-        }
     }
 
     toggleInsuranceCheck(e){      
@@ -77,16 +45,6 @@ class CheckoutForm extends Component {
       }
     }
 
-    updateShipping(field) {
-        return e => {
-            if(this.state.checked){
-                this.setState({ [`shipping_${field}`]: e.target.value, [`billing_${field}`]: e.target.value });
-            }else{
-                this.setState({ [field]: e.target.value });
-            }
-        };
-    }    
-
     update(field) {
         return e => this.setState({ [field]: e.target.value });
     }
@@ -98,8 +56,11 @@ class CheckoutForm extends Component {
         const total = (this.props.subtotal + this.props.installationFee + this.state.insuranceFee).toFixed(2);
         newOrder({
             variables: {
+
+                name: this.state.name,              
                 user: this.props.user,
                 products: this.props.productIdList,
+                telephone: this.state.telephone,
                 email: this.state.email,
                 totalFootage: parseInt(this.props.totalFootage),
                 productRentalPeriods: this.props.productRentalPeriods,
@@ -110,19 +71,14 @@ class CheckoutForm extends Component {
                 total: parseFloat(this.props.subtotal + this.props.installationFee + this.state.insuranceFee + salesTax),
                 token: token.id,
 
-                shipping_name: this.state.shipping_name,
-                shipping_address1: this.state.shipping_address1,
-                shipping_address2: this.state.shipping_address2,
-                shipping_city: this.state.shipping_city,
-                shipping_state: this.state.shipping_state,
-                shipping_zipcode: this.state.shipping_zipcode,
+                shippingName: this.state.shippingName,
+                address1: this.state.address1,
+                address2: this.state.address2,
+                city: this.state.city,
+                state: this.state.state,
+                zipcode: this.state.zipcode,
 
-                billing_name: this.state.billing_name,
-                billing_address1: this.state.billing_address1,
-                billing_address2: this.state.billing_address2,
-                billing_city: this.state.billing_city,
-                billing_state: this.state.billing_state,
-                billing_zipcode: this.state.billing_zipcode,
+
                 salesTax
             }
         });
@@ -156,8 +112,8 @@ class CheckoutForm extends Component {
                           <form>
                             <label>Name</label>
                             <input
-                              onChange={this.updateShipping("name")}
-                              value={this.state.billing_name}
+                              onChange={this.update("name")}
+                              value={this.state.name}
                               placeholder="Name"
                               type="text"
                             />
@@ -182,52 +138,6 @@ class CheckoutForm extends Component {
                             <CardElement />
                             <br />
                             <img src="stripe-logo.png" className="secure-payment" />
-                            {/* <label>Address Line 1</label>
-                            <input
-                              onChange={this.updateShipping("address1")}
-                              value={this.state.billing_address1}
-                              placeholder="Address Line 1"
-                              type="text"
-                            />
-                            <br />
-                            <label>Address Line 2</label>
-                            <input
-                              onChange={this.updateShipping("address2")}
-                              value={this.state.billing_address2}
-                              placeholder="Address Line 2"
-                              type="text"
-                            />
-                            <br />
-                            <label>City</label>
-                            <input
-                              onChange={this.updateShipping("city")}
-                              value={this.state.billing_city}
-                              placeholder="City"
-                              type="text"
-                            />
-                            <br />
-                            <label>State</label>
-                            <select
-                              onChange={this.updateShipping("state")}
-                              value={this.state.billing_state}
-                              placeholder="State"
-                              type="text"
-                            >
-                              {this.stateList.map(state => (
-                                <option value={state} key={state}>
-                                  {state}
-                                </option>
-                              ))}
-                            </select>
-                            <br />
-                            <label>Zip Code</label>
-                            <input
-                              className="half-width"
-                              onChange={this.updateShipping("zipcode")}
-                              value={this.state.billing_zipcode}
-                              placeholder="Zip Code"
-                              type="text"
-                            /> */}
                           </form>
                         </div>
                         <br />
@@ -238,32 +148,32 @@ class CheckoutForm extends Component {
                             <form>
                               <label>Name</label>
                               <input
-                                onChange={this.update("shipping_name")}
-                                value={this.state.shipping_name}
+                                onChange={this.update("shippingName")}
+                                value={this.state.shippingName}
                                 placeholder="Name"
                                 type="text"
                               />
                               <br />
                               <label>Address Line 1</label>
                               <input
-                                onChange={this.update("shipping_address1")}
-                                value={this.state.shipping_address1}
+                                onChange={this.update("address1")}
+                                value={this.state.address1}
                                 placeholder="Address Line 1"
                                 type="text"
                               />
                               <br />
                               <label>Address Line 2</label>
                               <input
-                                onChange={this.update("shipping_address2")}
-                                value={this.state.shipping_address2}
+                                onChange={this.update("address2")}
+                                value={this.state.address2}
                                 placeholder="Address Line 2"
                                 type="text"
                               />
                               <br />
                               <label>City</label>
                               <input
-                                onChange={this.update("shipping_city")}
-                                value={this.state.shipping_city}
+                                onChange={this.update("city")}
+                                value={this.state.city}
                                 placeholder="City"
                                 type="text"
                               />
@@ -272,8 +182,8 @@ class CheckoutForm extends Component {
                                 <div className="state-container">
                                 <label>State</label>
                                 <select
-                                  onChange={this.update("shipping_state")}
-                                  value={this.state.shipping_state}
+                                  onChange={this.update("state")}
+                                  value={this.state.state}
                                   placeholder="State"
                                   type="text"
                                 >
@@ -289,8 +199,8 @@ class CheckoutForm extends Component {
                                   <label>Zip Code</label>
                                   <input
                                     className="half-width"
-                                    onChange={this.update("shipping_zipcode")}
-                                    value={this.state.shipping_zipcode}
+                                    onChange={this.update("zipcode")}
+                                    value={this.state.zipcode}
                                     placeholder="Zip Code"
                                     id="zipcode"
                                     type="text"
@@ -299,14 +209,6 @@ class CheckoutForm extends Component {
                               </div>
                             </form>
                           </div>
-                        {/* <label>Shipping Info Matches Billing Info</label>
-                        <input
-                          type="checkbox"
-                          checked={this.state.checked}
-                          onChange={this.toggleCheck}
-                        />
-                        <br /> */}
-                        <p>{this.state.message}</p>
                       </div>
                       <div className="checkout-order-container">
                         <CheckoutSummary
@@ -329,6 +231,8 @@ class CheckoutForm extends Component {
                         >
                           Complete Purchase
                         </button>
+                        <br />
+                        <p>{this.state.message}</p>
                       </div>
                     </div>
                   );
