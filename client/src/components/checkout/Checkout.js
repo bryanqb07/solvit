@@ -9,7 +9,7 @@ const Checkout = () => {
         <Query query={FETCH_CART_ITEMS_AND_USER}>
             {({ loading, error, data }) => {
                 if (loading) return <div className="loader"></div>
-                if (error) return `Error! ${error.message}`;
+                if (error) return <div className="error">`Error! ${error.message}`</div>
                 if (data && data.cart && data.cart.length > 0) {
                     let installationFee = data.cart.map(item => item.installationFee).reduce((acc, cv) => acc + cv);
                     let subtotal = data.cart.map(item => item.subtotal).reduce((acc, cv) => acc + cv);

@@ -1,10 +1,9 @@
 import React from 'react';
 
 const CartItem = ({cartItem}) => (
-    <div>
-        <span>Name: {cartItem.name}</span>
-        <br />
-        <span>Price: ${cartItem.total}</span>
+    <div className="cart-item-container">
+        <span className="cart-item-name">{cartItem.name}</span>
+        <span>${cartItem.total}</span>
     </div>
 )
 

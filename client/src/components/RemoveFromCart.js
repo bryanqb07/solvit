@@ -2,14 +2,14 @@ import React from "react";
 import { FETCH_CART_ITEMS } from "../graphql/queries";
 import { ApolloConsumer, Query } from "react-apollo";
 
-const RemoveItemFromCart = ({ id }) => {
+const RemoveItemFromCart = ({ id, mini }) => {
   return (
     <ApolloConsumer>
       {cache => (
         <Query query={FETCH_CART_ITEMS} >
           {({ loading, error, data }) => {
-            if (loading) return <div class="loader"></div>;
-            if (error) return `Error! ${error.message}`;
+            if (loading) return <div className="loader"></div>;
+            if (error) return <div className="error">`Error! ${error.message}`</div>
             if (!data) return;
             if (data.cart.some(item => item.id === id)) {
               return (
@@ -28,7 +28,7 @@ const RemoveItemFromCart = ({ id }) => {
                     cache.writeQuery({ query: FETCH_CART_ITEMS, data });
                   }}
                 >
-                  Remove from cart
+                  { mini ? 'x' : 'Remove from cart' }
                 </button>
               );
             }

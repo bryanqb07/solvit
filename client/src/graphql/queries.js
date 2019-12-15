@@ -118,10 +118,7 @@ export const FETCH_USER_ORDERS = gql`
     userOrders(user: $user){
       id,
       total,
-      products{
-        id,
-        name
-      }
+      shippingStatus
     }
   }
 `;
@@ -180,7 +177,8 @@ export const SEARCH_PRODUCTS = gql`
       id,
       name,
       description,
-      weight
+      width,
+      height
     }
   }
 `;

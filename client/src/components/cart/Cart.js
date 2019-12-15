@@ -10,7 +10,7 @@ function Cart() {
         <Query query={FETCH_CART_ITEMS}>
             {({ loading, error, data }) => {
                 if (loading) return <div className="loader"></div>
-                if (error) return `Error! ${error.message}`;
+                if (error) return <div className="error">`Error! ${error.message}`</div>
                 if(!data) return null;
                 if(data.cart.length > 0){
                     return (

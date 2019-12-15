@@ -5,40 +5,19 @@ const { GraphQLObjectType, GraphQLID, GraphQLFloat, GraphQLList,
 
 const Order = mongoose.model("order");
 
-const ShippingType = new GraphQLObjectType({
-  name: "ShippingType",
-  fields: {
-        shippingStatus: { type: GraphQLString },
-        name: { type: GraphQLString },
-        address1: { type: GraphQLString },
-        address2: { type: GraphQLString },
-        city: { type: GraphQLString },
-        state: { type: GraphQLString },
-        zipcode: { type: GraphQLString }
-    }
-});
-
-const BillingType = new GraphQLObjectType({
-  name: "BillingType",
-  fields: {
-    name: { type: GraphQLString },
-    address1: { type: GraphQLString },
-    address2: { type: GraphQLString },
-    city: { type: GraphQLString },
-    state: { type: GraphQLString },
-    zipcode: { type: GraphQLString }
-  }
-});
-
 const OrderType = new GraphQLObjectType({
   name: "OrderType",
   fields: () => ({
     id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    email: { type: GraphQLString },
+    telephone: { type: GraphQLString },
     subtotal: { type: GraphQLFloat },
     installationFee: { type: GraphQLFloat },
     insured: { type: GraphQLBoolean },
     insuranceFee: { type: GraphQLFloat },
     total: { type: GraphQLFloat },
+    
     products: {
       type: new GraphQLList(require("./product_type")),
       resolve(parentValue) {
@@ -47,7 +26,7 @@ const OrderType = new GraphQLObjectType({
           .then(order => order.products);
       }
     },
-    email: { type: GraphQLString },
+
     user: {
       type: require("./user_type"),
       resolve(parentValue) {
@@ -56,9 +35,15 @@ const OrderType = new GraphQLObjectType({
           .then(order => order.user);
       }
     },
-    billingInfo: { type: BillingType },
-    shippingInfo: { type: ShippingType },
-    date: { type: GraphQLString }
+
+    date: { type: GraphQLString },
+    shippingStatus: { type: GraphQLString },
+    shippingName: { type: GraphQLString },
+    address1: { type: GraphQLString },
+    address2: { type: GraphQLString },
+    city: { type: GraphQLString },
+    state: { type: GraphQLString },
+    zipcode: { type: GraphQLString }
   })
 });
 

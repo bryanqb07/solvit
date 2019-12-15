@@ -24,28 +24,38 @@ class PriceQuote extends Component{
         if(!this.state.clicked){
             return(
                 <div>
-                    <label>Start Date: </label>
+                    <h3>Get an instant price quote online!</h3>
+                    <label className="price-quote-label">Start Date </label>
+                    <br />
                     <input
+                        className="quote-input"
                         onChange={this.update("startDate")}
                         value={this.state.startDate} 
                         type="date" />
                     <br />
-                    <label>End Date: </label>
+                    <label className="price-quote-label">End Date: </label>
+                    <br />
                     <input
+                        className="quote-input"
                         onChange={this.update("endDate")}
                         value={this.state.endDate} 
                         type="date" />
                     <br />
-                    <label>Total Area (ft.)</label>
+                    <label className="price-quote-label">Total Area (ft.)</label>
+                    <br />
                     <input
+                        className="quote-input"
                         onChange={this.update("totalFeet")}
                         value={this.state.totalFeet}
                         type="number" />
                     <br />
-                    <button onClick={e => {
-                        e.preventDefault();
-                        this.setState({ clicked: true })
-                    }}>Get instant quote</button>
+                    <button 
+                        className="pink-bg quote-button"                    
+                        onClick={e => {
+                            e.preventDefault();
+                            this.setState({ clicked: true })
+                        }}
+                    >Get instant quote</button>
                 </div>
             );
         }
@@ -61,19 +71,23 @@ class PriceQuote extends Component{
                     <Query query={FETCH_PRODUCT_PRICE} variables={priceParams}>
                         {({ loading, error, data }) => {
                             if (loading) return <div className="loader"></div>
-                            if (error) return `Error! ${error.message}`;
+                            if (error) return <div className="error">`Error! ${error.message}`</div>
                             const { id, name, price, installationFee } = data.getProductPrice
                             const total = price + installationFee
                             return (
                             <div>
+                                <h3>Here's your quote</h3>
                                 <p>Subtotal: ${price}</p>
                                 <p>Installation fee: ${installationFee}</p>
+                                <hr className="light-grey "/>
                                 <p>Total: ${total}</p>
                                 <AddItemToCart 
                                     price={price} id={id} name={name} installationFee={installationFee}
                                     totalFootage={this.state.totalFeet} 
                                     startDate={this.state.startDate} endDate={this.state.endDate} total={total}/>
-                                <button onClick={e => {
+                                <button 
+                                    className="selection-button pink-bg zoom"
+                                    onClick={e => {
                                     e.preventDefault();
                                     // read from the cache
                                     const { cart } = cache.readQuery({

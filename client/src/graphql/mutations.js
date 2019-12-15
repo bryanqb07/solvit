@@ -152,6 +152,10 @@ export const DELETE_CATEGORY = gql`
 
 export const CREATE_ORDER = gql`
     mutation CreateOrder(
+        $user: ID,
+        $email: String!,
+        $name: String!,
+        $telephone: String!,
         $token: String!
         $products: [ID]!, 
         $subtotal: Float!,
@@ -161,21 +165,13 @@ export const CREATE_ORDER = gql`
         $salesTax: Float!,
         $totalFootage: Int!,
         $total: Float!, 
-        $user: ID,
-        $email: String!,
         $productRentalPeriods: [String!],
-        $shipping_name: String!,
-        $shipping_address1: String!,
-        $shipping_address2: String!,
-        $shipping_city: String!,
-        $shipping_state: String!,
-        $shipping_zipcode: String!,
-        $billing_name: String!,
-        $billing_address1: String!,
-        $billing_address2: String!,
-        $billing_city: String!,
-        $billing_state: String!,
-        $billing_zipcode: String!
+        $shippingName: String!,
+        $address1: String!,
+        $address2: String!,
+        $city: String!,
+        $state: String!,
+        $zipcode: String!
         ){
         newOrder(
             token: $token,
@@ -189,26 +185,18 @@ export const CREATE_ORDER = gql`
             totalFootage: $totalFootage,
             user: $user,
             email: $email,
+            telephone: $telephone,
             productRentalPeriods: $productRentalPeriods,
-            shipping_name: $shipping_name,
-            shipping_address1: $shipping_address1,
-            shipping_address2: $shipping_address2,
-            shipping_city: $shipping_city,
-            shipping_state: $shipping_state,
-            shipping_zipcode: $shipping_zipcode,
-            billing_name: $billing_name,
-            billing_address1: $billing_address1,
-            billing_address2: $billing_address2,
-            billing_city: $billing_city,
-            billing_state: $billing_state,
-            billing_zipcode: $billing_zipcode
+            name: $name,
+            shippingName: $shippingName,
+            address1: $address1,
+            address2: $address2,
+            city: $city,
+            state: $state,
+            zipcode: $zipcode,
         ){
             id,
             email,
-            products{
-                id,
-                name
-            },
             total
         }
     }

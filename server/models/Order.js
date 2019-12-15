@@ -6,8 +6,16 @@ const OrderSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "user"
     },
+    name: {
+        type: String,
+        required: true
+    },
     email: {
         type: String,
+        required: true
+    },
+    telephone: {
+        type: Number,
         required: true
     },
     productRentalPeriods: [
@@ -30,69 +38,37 @@ const OrderSchema = new Schema({
             ref: "product"
         }
     ],
-    billingInfo: {
-        name: {
-            type: String,
-            required: true
-        },
-        address1: {
-            type: String,
-            required: true
-        },
-        address2: {
-            type: String
-        },
-        city: {
-            type: String,
-            required: true
-        },
-        state: {
-            type: String,
-            required: true
-        },
-        zipcode: {
-            type: String,
-            required: true
-        }
+      
+    shippingStatus: {
+        type: String,
+        default: "Not shipped"
     },
-    shippingInfo: {   
-        shippingStatus: {
-            type: String,
-            default: "Not shipped"
-        },
-        name: {
-            type: String,
-            required: true
-        },
-        address1: {
-            type: String,
-            required: true
-        },
-        address2: {
-            type: String
-        },
-        city: {
-            type: String,
-            required: true
-        },
-        state: {
-            type: String,
-            required: true
-        },
-        zipcode: {
-            type: String,
-            required: true
-        }
+    shippingName: {
+        type: String,
+        required: true
     },
-    paymentInfo: {
-        gateway: { 
-            type: String,
-            required: true 
-        },
-        token: { 
-            type: String,
-            required: true
-        }
+    address1: {
+        type: String,
+        required: true
+    },
+    address2: {
+        type: String
+    },
+    city: {
+        type: String,
+        required: true
+    },
+    state: {
+        type: String,
+        required: true
+    },
+    zipcode: {
+        type: String,
+        required: true
+    },
+    token: { 
+        type: String,
+        required: true
     },
     insured: {
         type: Boolean,

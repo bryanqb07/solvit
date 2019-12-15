@@ -31,55 +31,66 @@ class Nav extends Component {
                         {({ data }) => {
                             if (data.isLoggedIn) {
                                 return (
-                                    <div>
-                                        <Link
-                                            to={"/users/" + data.userId}
-                                            className="w3-bar-item w3-button w3-padding">
-                                            User Profile
-                                        </Link>
-                                        <Link
-                                            to={ "/orders/" + data.userId }
-                                            className="w3-bar-item w3-button w3-padding">
-                                            My Orders
-                                        </Link>
-                                        <button
-                                            className="w3-bar-item w3-button w3-padding"
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                localStorage.removeItem("auth-token");
-                                                localStorage.removeItem("isStaff");
-                                                client.writeData({
-                                                    data: {
-                                                        isLoggedIn: false,
-                                                        isStaff: false,
-                                                        userId: null
-                                                    }
-                                                });
-                                            }}
-                                        >
-                                            Logout
-                                        </button>
+                                    <div className="background-main primary-font-color">
+                                        <div className="topbar-wrapper wrapped top-padding space-between">
+                                            <div className="top-nav-left">    
+                                                <span>Welcome !</span>
+                                                <button
+                                                    className="logout-button"
+                                                    onClick={e => {
+                                                        e.preventDefault();
+                                                        localStorage.removeItem("auth-token");
+                                                        localStorage.removeItem("isStaff");
+                                                        client.writeData({
+                                                            data: {
+                                                                isLoggedIn: false,
+                                                                isStaff: false,
+                                                                userId: null
+                                                            }
+                                                        });
+                                                    }}
+                                                >
+                                                    Logout
+                                                </button>
+                                            </div>
+                                            <div className="top-nav-right">
+                                                <Link
+                                                        to={"/users/" + data.userId}
+                                                        className="no-decoration primary-font-color">
+                                                        User Profile
+                                                </Link>
+                                                <Link
+                                                    to={"/orders/" + data.userId}
+                                                    className="no-decoration primary-font-color margin-left">
+                                                    My Orders
+                                                </Link>
+                                            </div>
+                                        </div>
                                     </div>
                                 );
                             } else {
                                 return (
-                                    <div>
-                                        <Modal show={this.state.showLoginModal} handleClose={this.hideModal("showLoginModal")}>
-                                            <Login />
-                                        </Modal>
-                                        <button
-                                            type="button" onClick={this.showModal("showLoginModal")}
-                                            className="w3-bar-item w3-button w3-padding">
-                                            Login
-                                        </button>
-                                        <Modal show={this.state.showSignupModal} handleClose={this.hideModal("showSignupModal")}>
-                                            <Registration />
-                                        </Modal>
-                                        <button 
-                                            type="button" onClick={this.showModal("showSignupModal")}
-                                            className="w3-bar-item w3-button w3-padding">
-                                            Register
-                                         </button>
+                                    <div className="background-main primary-font-color">
+                                        <div className="topbar-wrapper wrapped top-padding flex-end">
+                                            <div>
+                                                <Modal show={this.state.showLoginModal} handleClose={this.hideModal("showLoginModal")}>
+                                                    <Login />
+                                                </Modal>
+                                                <button
+                                                    type="button" onClick={this.showModal("showLoginModal")}
+                                                    className="topnav-button margin-right">
+                                                    Login
+                                                </button>
+                                                <Modal show={this.state.showSignupModal} handleClose={this.hideModal("showSignupModal")}>
+                                                    <Registration />
+                                                </Modal>
+                                                <button
+                                                    type="button" onClick={this.showModal("showSignupModal")}
+                                                    className="topnav-button">
+                                                    Register
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 );
                             }
