@@ -41,7 +41,7 @@ const Checkout = () => {
                     );
                 } else {
                   return (
-                      <div>Cart is empty.</div>
+                      <div className="empty-cart">Cart is empty.</div>
                   )
                 }
             }}
