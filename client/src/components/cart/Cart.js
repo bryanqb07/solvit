@@ -14,7 +14,7 @@ function Cart() {
                 if(!data) return null;
                 if(data.cart.length > 0){
                     return (
-                        <div>
+                        <div className="cart-container">
                             <h3>Your Shopping Cart</h3>
                             <ul>
                                 {data.cart.map(cartItem => (
@@ -30,7 +30,7 @@ function Cart() {
                     )
                 }else{
                     return (
-                        <div>
+                        <div className="empty-cart">
                             <h3>Your Shopping Cart</h3>
                             <p>Cart is empty.</p>
                         </div>   
