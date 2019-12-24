@@ -5,13 +5,7 @@ const CategorySchema = new Schema({
     name: {
         type: String,
         required: true
-    },
-    products: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "product"
-        }
-    ]
-});
+    }
+}, { timestamps: true });
 
 module.exports = mongoose.model("category", CategorySchema);

@@ -1,4 +1,8 @@
 require("./User");
 require("./Category");
-require("./Product");
-require("./Order");
+require("./Video");
+require("./Review");
+require("./CallLog");
+require("./Reservation");
+require("./Notification");
+require("./PurchaseLog");

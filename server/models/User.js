@@ -14,16 +14,101 @@ const UserSchema = new Schema({
     },
     password: {
         type: String,
+        required: true,
+        min: 8,
+        max: 32
+    },
+    isGiver: {
+        type: Boolean,
         required: true
     },
-    date: {
-        type: Date,
-        default: Date.now
+    expertiseCategories: [{
+        type: Schema.Types.ObjectId,
+        ref: "category"
+    }],
+    expertiseTitle: {
+        type: String
     },
-    isStaff: {
+    expertiseDescription: {
+        type: String
+    },
+    hourlyRate: {
+        type: Number
+    },
+    giverVideos: [{
+        type: Schema.Types.ObjectId,
+        ref: "video"
+    }],
+    schedule: [{
+        type: Date
+    }],
+    pendingGiverReservations: [{
+        type: Schema.Types.ObjectId,
+        ref: "reservations"
+    }],
+    scheduledGiverReservations: [{
+        type: Schema.Types.ObjectId,
+        ref: "reservations"
+    }],
+    isAsker: {
         type: Boolean,
-        default: false 
-    }
-});
+        required: true
+    },
+    interests: [{
+        type: Schema.Types.ObjectId,
+        ref: "category"
+    }],
+    askerVideos: [{
+        type: Schema.Types.ObjectId,
+        ref: "video"
+    }],
+    pendingAskerReservations: [{
+        type: Schema.Types.ObjectId,
+        ref: "reservations"
+    }],
+    scheduledAskerReservations: [{
+        type: Schema.Types.ObjectId,
+        ref: "reservations"
+    }],
+    gems: {
+        type: Number,
+        default: 0
+    },
+    avatar_url: {
+        type: String
+    },
+    followers: [{
+        type: Schema.Types.ObjectId,
+        ref: "user"
+    }],
+    followees: [{
+        type: Schema.Types.ObjectId,
+        ref: "user"
+    }],
+    likedVideos: [{
+        type: Schema.Types.ObjectId,
+        ref: "video"
+    }],
+    reviewsGiven: [{
+        type: Schema.Types.ObjectId,
+        ref: "review"
+    }],
+    reviewsReceived: [{
+        type: Schema.Types.ObjectId,
+        ref: "review"
+    }],
+    purchaseLogs: [{
+        type: Schema.Types.ObjectId,
+        ref: "purchaseLog"
+    }],
+    callLogs: [{
+        type: Schema.Types.ObjectId,
+        ref: "callLog"
+    }],
+    notifications: [{
+        type: Schema.Types.ObjectId,
+        ref: "notification"
+    }]
+}, { timestamps: true });
 
 module.exports = mongoose.model("user", UserSchema);
