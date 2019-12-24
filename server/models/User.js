@@ -19,8 +19,7 @@ const UserSchema = new Schema({
         max: 32
     },
     isGiver: {
-        type: Boolean,
-        required: true
+        type: Boolean
     },
     expertiseCategories: [{
         type: Schema.Types.ObjectId,
@@ -51,8 +50,7 @@ const UserSchema = new Schema({
         ref: "reservations"
     }],
     isAsker: {
-        type: Boolean,
-        required: true
+        type: Boolean
     },
     interests: [{
         type: Schema.Types.ObjectId,

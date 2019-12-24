@@ -15,24 +15,6 @@ const stripe = require("stripe")(stripeKey);
 const mutation = new GraphQLObjectType({
     name: "Mutation",
     fields: {
-        updateUserName: {
-            type: UserType,
-            args: { 
-                id: { type: GraphQLID },
-                name: { type: GraphQLString},
-                email: { type: GraphQLString}},
-                interests: { type: GraphQLList(GraphQLID) },
-            resolve(_, { id, name, email }){
-                const updatedUser = {};
-                updatedUser.id = id;
-                updatedUser.email = email;
-                updatedUser.isStaff = true;
-                if (name) updatedUser.name = name;
-                return User.findByIdAndUpdate(id, { $set: updatedUser }, { new: true }, (err, user) => {
-                    return user;
-                });
-            }
-        },
         newCategory: {
             type: CategoryType,
             args: {

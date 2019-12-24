@@ -36,8 +36,9 @@ const register = async data => {
         user.save();
 
         const token = jwt.sign({ id: user._id }, keys.secretOrKey);
+        const id = user._id;
 
-        return { token, loggedIn: true, ...user._doc, password: null };
+        return { token, loggedIn: true, ...user._doc, id, password: null };
     } catch(err){
         throw err;
     }
