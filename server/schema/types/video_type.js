@@ -5,7 +5,7 @@ const { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLID, GraphQLFloat, 
 const Video = mongoose.model("video");
 
 const VideoType = new GraphQLObjectType({
-    name: "CallLogType",
+    name: "VideoType",
     fields: () => ({
         id: { type: GraphQLID },
         asker: {

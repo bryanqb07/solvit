@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLFloat, GraphQLInt } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLFloat, GraphQLInt, GraphQLList } = graphql;
 
 const PurchaseLog = mongoose.model("purchaseLog");
 
 const PurchaseLogType = new GraphQLObjectType({
-    name: "CallLogType",
+    name: "PurchaseLogType",
     fields: () => ({
         id: { type: GraphQLID },
         date: { type: GraphQLString },
